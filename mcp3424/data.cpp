@@ -14,7 +14,7 @@ int main() {
     for (int i=0; i<500; ++i) {
         usleep(70000);
         data = dev.getConversion();
-        printf("Sample #%-3u:      0x%04x      %-8d (%-.5fV)\n", i, data, data, MCP3424::toVoltage(data, 2, 16));
+        printf("Sample #%-3u:      0x%04x      %-8d (%-.5fV   OR   %3.5fmA)\n", i, data, data, MCP3424::toVoltage(data, 2, 16), MCP3424::toVoltage(data, 2, 16) / 0.249);
     }
 
     return 0;
