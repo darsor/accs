@@ -34,6 +34,7 @@ class MCP3424 {
         void startConversion(); // starts conversion in oneshot mode
         int32_t getConversion();
         bool isReady();
+        static float toVoltage(int32_t code, int pga, int resolution);
 
     private:
         int fd;

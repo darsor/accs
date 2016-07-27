@@ -69,3 +69,24 @@ int32_t MCP3424::getConversion() {
 bool MCP3424::isReady() {
     return !(getConfig() & RDY_MASK);
 }
+
+float MCP3424::toVoltage(int32_t code, int pga, int resolution) {
+    float lsb = 0;
+    switch (resolution) {
+        case 12:
+            lsb = 0.001;
+            break;
+        case 14:
+            lsb = 0.00025;
+            break;
+        case 16:
+            lsb = 0.0000625;
+            break;
+        case 18:
+            lsb = 0.000015625;
+            break;
+        default:
+            printf("invalid resolution for voltage conversion)\n");
+    }
+    return code * (lsb / pga);
+}
