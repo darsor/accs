@@ -1,2 +1,2 @@
 #!/bin/bash
-g++ *.cpp -o test -Wall -lwiringPi -std=c++11
+g++ *.cpp -o test.out -Wall -lwiringPi -std=c++11 -O3
