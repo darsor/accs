@@ -88,5 +88,5 @@ float MCP3424::toVoltage(int32_t code, int pga, int resolution) {
         default:
             printf("invalid resolution for voltage conversion)\n");
     }
-    return (code / max) * (2.048 / pga) * 5.454545;
+    return (code / max) * (2.048 / pga) * 5.45454545;
 }

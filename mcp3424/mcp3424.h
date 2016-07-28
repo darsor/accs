@@ -1,3 +1,6 @@
+#ifndef MCP3424_H
+#define MCP3424_H
+
 #include <cstdint>
 
 // big masks and values for use with the constructor and setConfig()
@@ -40,3 +43,5 @@ class MCP3424 {
         int fd;
         char config;
 };
+
+#endif
