@@ -106,7 +106,7 @@
 #define DAC_DISCONNECT      0b1111
 
 struct StampedConversion {
-    std::chrono::duration<long long int, std::ratio<1ll, 1000000ll> > timestamp;
+    int64_t timestamp;
     int16_t code;
 };
 
@@ -223,6 +223,8 @@ class ADS1148 {
          *      Set the output pins for both current source DACs
          */
         void setDACpins(char dac1, char dac2);
+
+        char readReg(char reg);
 
         /*  ADS1148 drdyISR
          *  Notes:

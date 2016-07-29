@@ -8,7 +8,7 @@ int main() {
     usleep(100000);
     int32_t data;
 
-    dev.setConfig(CHANNEL1 | CONTINUOUS | RES_16_BITS | PGAx2);
+    dev.setConfig(CHANNEL2 | CONTINUOUS | RES_16_BITS | PGAx2);
     usleep(100000);
 
     for (int i=0; i<500; ++i) {

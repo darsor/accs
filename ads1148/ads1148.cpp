@@ -13,7 +13,7 @@ bool drdy;
 std::condition_variable isr_cv;
 
 void ADS1148::drdyISR() {
-    conversion.timestamp = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch());
+    conversion.timestamp = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     {
         std::lock_guard<std::mutex> lk(isr_mutex);
         drdy = true;
@@ -32,7 +32,7 @@ ADS1148::ADS1148(int channel, int speed, int drdyPin):
         perror("unable to set up WiringPi");
         exit(1);
     }
-    fd = wiringPiSPISetup(channel, speed);
+    fd = wiringPiSPISetupMode(channel, speed, 1);
     if (fd < 0) {
         perror("unable to open ADS1148");
         exit(1);
@@ -111,6 +111,12 @@ void ADS1148::setDACpins(char dac1, char dac2) {
     writeReg(REG_IDAC1, 1, &bits);
 }
 
+char ADS1148::readReg(char reg) {
+    char data;
+    readReg(reg, 1, &data);
+    return data;
+}
+
 void ADS1148::writeReg(char reg, int bytes, const char* data) {
     if (bytes < 0 || bytes > 15) {
         printf("INVALID write size\n");
@@ -121,6 +127,7 @@ void ADS1148::writeReg(char reg, int bytes, const char* data) {
     cmd[1] = bytes-1;
     memcpy(cmd+2, data, bytes);
     wiringPiSPIDataRW(channel, (unsigned char*) cmd, 2+bytes);
+    usleep(100);
     delete[] cmd;
 }
 
