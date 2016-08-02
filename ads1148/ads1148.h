@@ -224,6 +224,14 @@ class ADS1148 {
          */
         void setDACpins(char dac1, char dac2);
 
+        /*  ADS1148 readReg
+         *  Parameters:
+         *      char reg - the register address to be read from
+         *  Return value:
+         *      char - the contents of the register
+         *  Notes:
+         *      Get the contents of any register (for debugging purposes)
+         */
         char readReg(char reg);
 
         /*  ADS1148 drdyISR

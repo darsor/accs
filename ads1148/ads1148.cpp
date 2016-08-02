@@ -62,7 +62,7 @@ void ADS1148::getConversion(StampedConversion &conv, char pos, char neg) {
         wiringPiSPIDataRW(channel, (unsigned char*) cmd, 3);
     }
     conv.timestamp = conversion.timestamp;
-    memcpy(&(conv.code), cmd, 2);
+    conv.code = ((int16_t) cmd[0]) << 8 | cmd[1];
     conversion.code = conv.code;
 }
 
