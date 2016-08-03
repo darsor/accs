@@ -1,0 +1,3 @@
+#!/bin/bash
+g++ mcp3424.cpp test.cpp -o test.out -Wall -lwiringPi -std=c++11 -O3
+g++ mcp3424.cpp data.cpp -o data.out -Wall -lwiringPi -std=c++11 -O3
