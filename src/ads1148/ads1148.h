@@ -55,15 +55,15 @@
 #define VREF_ONBOARD        0b00010000
 #define VREF_ONBOARD_REF0   0b00011000
 
-#define PGA_MASK            0b01110000
-#define PGAx1               0b00000000
-#define PGAx2               0b00010000
-#define PGAx4               0b00100000
-#define PGAx8               0b00110000
-#define PGAx16              0b01000000
-#define PGAx32              0b01010000
-#define PGAx64              0b01100000
-#define PGAx128             0b01110000
+#define ADS1148_PGA_MASK    0b01110000
+#define ADS1148_PGAx1       0b00000000
+#define ADS1148_PGAx2       0b00010000
+#define ADS1148_PGAx4       0b00100000
+#define ADS1148_PGAx8       0b00110000
+#define ADS1148_PGAx16      0b01000000
+#define ADS1148_PGAx32      0b01010000
+#define ADS1148_PGAx64      0b01100000
+#define ADS1148_PGAx128     0b01110000
 
 #define DATARATE_MASK       0b00001111
 #define DATA_5SPS           0b00000000

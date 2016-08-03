@@ -75,6 +75,6 @@ void HKPacket::convert() {
     memcpy(buffer+5 , &timestamp , 8);
     memcpy(buffer+13, &queue_size, 2);
     memcpy(buffer+15, &cpu_temp  , 4);
-    memcpy(buffer+19, &cpu_usage , 4);
+    memcpy(buffer+19, &cpu_load  , 4);
     memcpy(buffer+23, &mem_usage , 4);
 }

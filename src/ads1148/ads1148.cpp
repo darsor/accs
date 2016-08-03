@@ -88,7 +88,7 @@ void ADS1148::setVREFsource(char source) {
 void ADS1148::setPGA(char pga) {
     char bits;
     readReg(REG_SYS0, 1, &bits);
-    bits = (bits & ~PGA_MASK) | pga;
+    bits = (bits & ~ADS1148_PGA_MASK) | pga;
     writeReg(REG_SYS0, 1, &bits);
 }
 

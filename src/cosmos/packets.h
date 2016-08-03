@@ -1,6 +1,3 @@
-/**********************
- * Packet Definitions *
- **********************/
 #ifndef PACKETS_H
 #define PACKETS_H
 
@@ -16,7 +13,7 @@
 #define HK_PKT_ID           0xFF
 #define HK_PKT_SIZE         27
 
-#include <cstdint>
+#include <cstdint>      // for precise integer definitions
 
 inline void endianSwap(float &f) {
     float temp = f;
@@ -67,20 +64,22 @@ class TempPacket: public Packet {
 };
 
 class RpmPacket: public Packet {
-    RpmPacket();
-    void convert();
-    uint64_t timestamp;
-    uint16_t value;
+    public:
+        RpmPacket();
+        void convert();
+        uint64_t timestamp;
+        uint16_t value;
 };
 
 class HKPacket: public Packet {
-    HKPacket();
-    void convert();
-    uint64_t timestamp;
-    uint16_t queue_size;
-    float cpu_temp;
-    float cpu_usage;
-    uint32_t mem_usage;
+    public:
+        HKPacket();
+        void convert();
+        uint64_t timestamp;
+        uint16_t queue_size;
+        float cpu_temp;
+        float cpu_load;
+        uint32_t mem_usage;
 };
 
 #endif
