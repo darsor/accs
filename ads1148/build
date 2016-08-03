@@ -1,2 +1,0 @@
-#!/bin/bash
-g++ ads1148.cpp test.cpp -o test.out -Wall -lwiringPi -std=c++11 -O3

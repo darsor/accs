@@ -28,6 +28,7 @@
 
 #define RDY_MASK        0b10000000
 
+//TODO: document these functions
 class MCP3424 {
     public:
         MCP3424(int address, char bits = CHANNEL1 | CONTINUOUS | RES_12_BITS | PGAx1);

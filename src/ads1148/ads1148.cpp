@@ -30,16 +30,16 @@ ADS1148::ADS1148(int channel, int speed, int drdyPin):
     instancePtr = this;
     if (wiringPiSetup() < 0) {
         perror("unable to set up WiringPi");
-        exit(1);
+        throw 1;
     }
     fd = wiringPiSPISetupMode(channel, speed, 1);
     if (fd < 0) {
         perror("unable to open ADS1148");
-        exit(1);
+        throw 1;
     }
     if (wiringPiISR(drdyPin, INT_EDGE_FALLING, adaptISR) < 0) {
         perror("unable to set up ADS1148 ISR");
-        exit(1);
+        throw 1;
     }
 }
 

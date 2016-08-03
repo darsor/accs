@@ -8,7 +8,7 @@ MCP3424::MCP3424(int address, char bits) {
     fd = wiringPiI2CSetup(address);
     if (fd < 0) {
         perror("Failed to open MCP3424");
-        exit(1);
+        throw 1;
     }
     setConfig(bits);
 }
