@@ -30,3 +30,13 @@
 
 # Build foler
 build/
+
+# COSMOS
+lib/
+outputs/
+procedures/
+tools/
+Gemfile*
+Launcher*
+Rakefile
+userpath.txt
