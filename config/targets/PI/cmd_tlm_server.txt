@@ -1,4 +1,5 @@
 #INTERFACE  NAME            INTERFACE FILE              HOST                    WRITE   READ    W TIMEOUT   R TIMEOUT   STREAM  ARGUMENTS
 #-----------------------------------------------------------------------------------------------------------------------------------------
-INTERFACE   PI_TCPIP    	tcpip_client_interface.rb   accs.bluezone.usu.edu  	4810    4810    nil         nil      	LENGTH  0 32 0 1
+INTERFACE   PI_TCPIP    	tcpip_client_interface.rb   accs.bluezone.usu.edu  	4810    4810    nil         nil      	LENGTH  0 32 0 1 LITTLE_ENDIAN
     TARGET PI
+	DONT_CONNECT

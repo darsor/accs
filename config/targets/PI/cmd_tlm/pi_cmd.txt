@@ -1,4 +1,4 @@
 COMMAND PI PUMP LITTLE_ENDIAN "Set pump voltage"
-    PARAMETER       LENGTH      0   32 UINT  8  8  8 "Length of packet in bytes, must be 8"
+    PARAMETER       LENGTH      0   32 UINT  9  9  9 "Length of packet in bytes, must be 8"
     ID_PARAMETER    CMD_ID      32   8 UINT 48 48 48 "ID of command, must be 0x30"
     PARAMETER       VOLTAGE     40  32 FLOAT 0 12  0 "Voltage given to pump, between 0 and 12V"
