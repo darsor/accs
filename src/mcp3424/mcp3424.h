@@ -28,16 +28,83 @@
 
 #define RDY_MASK        0b10000000
 
-//TODO: document these functions
 class MCP3424 {
     public:
+
+        /*  MCP3424 constructor
+         *  Parameters:
+         *      int address - the I2C address of the device
+         *      char bits - starting configuration for the device. Defaults have bene given.
+         *          takes the same input as the setConfig() function
+         *  Notes:
+         *      Defaults are:
+         *          Channel 1, continuous mode, 12-bit ADC resolution, PGA x1
+         */
         MCP3424(int address, char bits = CHANNEL1 | CONTINUOUS | RES_12_BITS | PGAx1);
         ~MCP3424();
+
+        /*  MCP3424 setConfig()
+         *  Parameters:
+         *      char bits - configuration for the device. Includes:
+         *          Channel, operating mode, resolution, and pga.
+         *          All four must be included each time this function is called.
+         *          Valid arguments are:
+         *              Channel: CHANNEL1, CHANNEL2, CHANNEL3, or CHANNEL4
+         *              Mode: ONESHOT or CONTINUOUS
+         *              Resolution: RES_12_BITS, RES_14_BITS, RES_16_BITS, or RES_18_BITS
+         *              PGA: PGAx1, PGAx2, PGAx3, or PGAx4
+         *  Notes:
+         *      See the constructor for an example of how to call this function
+         *      (it takes the same arguments for it's 'bits' parameter
+         */
         void setConfig(char bits);
+
+        /*  MCP3424 getConfig()
+         *  Return values:
+         *      char - the value of the configuration register set by the setConfig() function
+         *  Notes:
+         *      This can be used to check current configuration values (using the defined
+         *      bit masks, if you're saavy).
+         */
         char getConfig();
-        void startConversion(); // starts conversion in oneshot mode
+
+        /*  MCP3424 startConversion()
+         *  Notes:
+         *      This function writes the ready bit of the config register, signaling
+         *      the device to start a conversion. This does not do anything in
+         *      continuous mode.
+         */
+        void startConversion();
+
+        /*  MCP3424 getConversion()
+         *  Return values:
+         *      int32_t - 32 bit integer that is the most recent conversion result
+         *  Notes:
+         *      The isReady() function can be used to determine if the conversion
+         *      result is ready to be read
+         */
         int32_t getConversion();
+
+
+        /*  MCP3424 getConversion()
+         *  Return values:
+         *      bool - whether or not there is a new conversion result ready to be read
+         *  Notes:
+         *      This function can be called repeatedly until it returns true
+         */
         bool isReady();
+
+        /*  MCP3424 toVoltage()
+         *  Parameters:
+         *      int32_t code - the conversion result given by getConversion()
+         *      int pga - the gain of the PGA (valid arguments are 1, 2, 3 or 4)
+         *      int resolution - resolution of the ADC (valid arguments are 12, 14, 16, or 18)
+         *  Return values:
+         *      float - the input voltage specified by the conversion result
+         *  Notes:
+         *      If measuring current, you can get Amps instead of Volts by
+         *      dividing the result by 249.
+         */
         static float toVoltage(int32_t code, int pga, int resolution);
 
     private:
