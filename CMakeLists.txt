@@ -9,6 +9,8 @@ set(ACCS_SOURCES
     src/cosmos/cosmosQueue.cpp
     src/ads1148/ads1148.cpp
     src/mcp3424/mcp3424.cpp
+    src/pump/dcmotor.cpp
+    src/pump/pwm.cpp
     src/main.cpp
 )
 

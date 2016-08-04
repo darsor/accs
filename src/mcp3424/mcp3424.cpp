@@ -25,7 +25,7 @@ MCP3424::~MCP3424() {
 void MCP3424::setConfig(char bits) {
     config = bits;
     if (wiringPiI2CWrite(fd, bits) < 0) {
-        perror("Failed to communicate with MCP3424\n");
+        perror("Failed to communicate with MCP3424");
         throw 1;
     }
 }
@@ -42,7 +42,7 @@ char MCP3424::getConfig() {
         bytes = 3;
     }
     if (read(fd, temp, bytes) < 0) {
-        perror("Failed to communicate with MCP3424\n");
+        perror("Failed to communicate with MCP3424");
         throw 1;
     }
     config = temp[bytes-1];
@@ -52,7 +52,7 @@ char MCP3424::getConfig() {
 // write the ready bit of the configuration byte
 void MCP3424::startConversion() {
     if (wiringPiI2CWrite(fd, config | RDY_MASK) < 0) {
-        perror("Failed to communicate with MCP3424\n");
+        perror("Failed to communicate with MCP3424");
         throw 1;
     }
 }
@@ -70,7 +70,7 @@ int32_t MCP3424::getConversion() {
         bytes = 2;
     }
     if (read(fd, temp, bytes) < 0) {
-        perror("Failed to communicate with MCP3424\n");
+        perror("Failed to communicate with MCP3424");
         throw 1;
     }
     // mash the bytes together depending on the resolution

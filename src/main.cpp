@@ -1,5 +1,6 @@
 #include "mcp3424/mcp3424.h"    // for MCP3424 interface
 #include "ads1148/ads1148.h"    // for ADS1148 interface
+#include "pump/dcmotor.h"       // for pump interface
 #include "cosmos/packets.h"     // for packet definitions
 #include "cosmos/cosmosQueue.h" // for cosmos tlm and cmd queues
 #include <wiringPi.h>           // for PI_THREAD
@@ -38,6 +39,7 @@ PI_THREAD(ads1148_thread) {
             try {
                 //TODO: increase the SPI bus speed
                 //TODO: change the DRDY pin
+                //TODO: reset device at startup
                 dev = new ADS1148(0, 100000, 4);
                 printf("Successfully opened the ADS1148\n");
                 break;
@@ -145,6 +147,7 @@ PI_THREAD(mcp3424_thread) {
 PI_THREAD(rpm_thread) {
     RpmPacket* rPacket = nullptr;
     // start the ISR (Interrupt Sub-Routine)
+    wiringPiSetup();
     wiringPiISR(RPM_PIN, INT_EDGE_RISING, rpmISR);
     unsigned long start = 0;
     unsigned long end = count;
@@ -168,6 +171,8 @@ PI_THREAD(housekeeping) {
     std::ifstream loadfile("/proc/loadavg");
     std::string tmp;
     struct sysinfo memInfo;
+
+    // get and send housekeeping packet repeatedly
     while (true) {
         hkPacket = new HKPacket;
         hkPacket->timestamp = getTimestamp();
@@ -220,7 +225,39 @@ int main() {
     cmd << "renice -n -2 -p " << pid;
     if (pid > 0) system(cmd.str().c_str());*/
 
-    //TODO: do something here?
+    // TODO: gracefully handle disconnects? Or not connected?
+    float speed;
+    Packet* cmdPacket = nullptr;
+    DCMotor* pump = nullptr;
+    // try to connect to the motor hat every 10 seconds until it succeeds
+    while (true) {
+        try {
+            // TODO: change PWM frequency?
+            pump = new DCMotor(3, 0x60, 1500);
+            printf("Successfully opened the motor hat\n");
+            break;
+        } catch (int e) {
+            printf("FAILED to open the motor hat. Trying again in 10 seconds...\n");
+            sleep(10);
+        }
+    }
+    // loop over and over, waiting for a pump command
+    while (true) {
+        // if there's a pump command:
+        if (queue.cmdSize() > 0 && queue.cmd_front_id() == 0x30) {
+            queue.pop_cmd(cmdPacket);
+            PumpCmd* pCmd = static_cast<PumpCmd*>(cmdPacket);
+            pCmd->PumpCmd::convert();
+            // convert the voltage into a PWM code
+            speed = pCmd->voltage * 4095.0 / 12.0;
+            printf("Received pump command: setting pump voltage to %f\n", pCmd->voltage);
+            // set the speed
+            pump->setGradSpeed((int) speed);
+            delete cmdPacket;
+            cmdPacket = nullptr;
+        }
+        sleep(500000);
+    }
     return 0;
 }
 

@@ -141,8 +141,8 @@ void CosmosQueue::tlm_thread() {
 
 void CosmosQueue::cmd_thread() {
     unsigned char buffer[128];
-    uint32_t length, u32;;
-    uint16_t id, u16;
+    uint32_t length;
+    uint8_t id;
     Packet* cmd;
     while (true) {
         connection_mutex.lock();
@@ -154,8 +154,7 @@ void CosmosQueue::cmd_thread() {
                 connected.store(false);
                 break;
             } else {
-                memcpy(&u32, buffer, sizeof(u32));
-                length = ntohl(u32);
+                memcpy(&length, buffer, sizeof(length));
                 printf("received packet of length %u\n", length);
                 if (length < 6) continue;
                 // receive the rest of the packet
@@ -165,8 +164,7 @@ void CosmosQueue::cmd_thread() {
                     continue;
                 }
                 // get the id to know what command it is
-                memcpy(&u16, buffer+4, sizeof(u16));
-                id = ntohs(u16);
+                memcpy(&id, buffer+4, sizeof(id));
                 cmd = new Packet(length, id, true);
                 memcpy(cmd->buffer, buffer, length);
                 push_cmd(cmd);
