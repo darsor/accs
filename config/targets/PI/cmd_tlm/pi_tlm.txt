@@ -3,7 +3,7 @@ TELEMETRY PI PRESSURE LITTLE_ENDIAN "pressure sensor readings"
     APPEND_ID_ITEM PKT_ID     8 UINT 0 "packet id which must be 0x00"
 	APPEND_ITEM VENTURI_TIME 64 UINT "venturi pressure timestamp in microseconds since epoch"
 	APPEND_ITEM VENTURI		 32 UINT "measured value from venturi pressure sensor"
-		READ_CONVERSION venturi.rb 16 1650 1
+		READ_CONVERSION venturi.rb 16 1000 1
 	APPEND_ITEM PUMP_TIME    64 UINT "pump pressure timestamp in microseconds since epoch"
 	APPEND_ITEM PUMP		 32 UINT "measured value from pump pressure sensor"
 	APPEND_ITEM STATIC_TIME  64 UINT "static pressure timestamp in microseconds since epoch"

@@ -16,12 +16,15 @@ module Cosmos
     end
     def call(value, packet, buffer)
 	  # convert from ADC code to mA
-	  mA = (value / @max) * (2.048 / 2.0) * (180 / 33) / 0.249
+	  mA = (value.to_f / @max.to_f) * (2.048 / 2.0) * (180.0 / 33.0) / 0.249
+	  if mA < 4
+	    return 0.0
+	  end
 	  # convert from mA to psi
-	  diff = (mA-4)/8 # tune this to actual full-scale
-	  # convert from psi to mass flow rate (g/s)
-	  mdot = @rho * @cd * sqrt((2*(diff * @psi2a)/@rho))*@a1/(sqrt((@a1/@a2)**2-1)) * 1000
-      return mdot
+	  diff = (mA-4)/8.0 # tune this to actual full-scale
+	  # convert from psi to volume flow rate
+	  q = @cd.to_f * sqrt((2.0*(diff.to_f * @psi2pa.to_f)/@rho.to_f))*@a1.to_f/(sqrt((@a1.to_f/@a2.to_f)**2.0-1.0)) * 60.0 * 1000000.0
+      return q
     end
   end
 end
