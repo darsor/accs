@@ -3,7 +3,7 @@
 #include <cstring>
 #include <cstdio>
 
-Packet::Packet(const uint32_t length, const uint16_t id, bool cmd):
+Packet::Packet(const uint32_t length, const uint8_t id, bool cmd):
     length(length), id(id) {
     if (cmd) buffer = new unsigned char[length];
     else buffer = nullptr;
@@ -77,4 +77,11 @@ void HKPacket::convert() {
     memcpy(buffer+15, &cpu_temp  , 4);
     memcpy(buffer+19, &cpu_load  , 4);
     memcpy(buffer+23, &mem_usage , 4);
+}
+
+PumpCmd::PumpCmd() : Packet(PUMP_CMD_SIZE, PUMP_CMD_ID, true) {}
+
+void PumpCmd::convert() {
+    if (!buffer) return;
+    memcpy(&voltage, buffer+5, sizeof(voltage));
 }

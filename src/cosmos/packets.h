@@ -10,6 +10,9 @@
 #define RPM_PKT_ID          0x20
 #define RPM_PKT_SIZE        15
 
+#define PUMP_CMD_ID         0x30
+#define PUMP_CMD_SIZE       9
+
 #define HK_PKT_ID           0xFF
 #define HK_PKT_SIZE         27
 
@@ -27,7 +30,7 @@ inline void endianSwap(float &f) {
 
 class Packet {
     public:
-        Packet(const uint32_t length, const uint16_t id, bool cmd = false);
+        Packet(const uint32_t length, const uint8_t id, bool cmd = false);
         Packet(const Packet& that);
         Packet& operator=(const Packet& that);
         virtual ~Packet();
@@ -80,6 +83,13 @@ class HKPacket: public Packet {
         float cpu_temp;
         float cpu_load;
         uint32_t mem_usage;
+};
+
+class PumpCmd: public Packet {
+    public:
+        PumpCmd();
+        void convert();
+        float voltage;
 };
 
 #endif
