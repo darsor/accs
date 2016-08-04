@@ -8,6 +8,7 @@
 
 PWM::PWM(int address=0x40) {
     pwm = wiringPiI2CSetup(address);
+    printf("pwm file descriptor is %d\n", pwm);
     if (pwm < 0) {
         perror("Failed to communicate with motor hat\n");
         throw 1;

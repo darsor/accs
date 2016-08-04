@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <cmath>
 
-DCMotor::DCMotor(int channel, int addr, int freq) : pwm(addr) {
+DCMotor::DCMotor(int channel, int addr, int freq) try : pwm(addr) {
     if (channel == 0) {
         pwmPin = 8;
         in2Pin = 9;
@@ -27,6 +27,8 @@ DCMotor::DCMotor(int channel, int addr, int freq) : pwm(addr) {
     pwmSpeedOld = 0;
     pwm.setPWMFreq(freq); // default @1600Hz PWM freq
     run(RELEASE);
+} catch(...) {
+    printf("pwm threw an exception\n");
 }
 
 DCMotor::~DCMotor() {

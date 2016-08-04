@@ -50,7 +50,13 @@ PI_THREAD(ads1148_thread) {
         }
 
         //TODO: set ADS1148 settings (VREP, IEXT, etc.)
-        dev->setVREFsource(VREF_REF1);
+        try {
+            dev->setVREFsource(VREF_REF1);
+        } catch (int e) {
+            printf("failed to write ADS1148 settings\n");
+            delete dev;
+            continue;
+        }
         TempPacket* tPacket = nullptr;
         StampedConversion conv;
 
@@ -113,6 +119,7 @@ PI_THREAD(mcp3424_thread) {
         try {
             // get and queue the PressurePacket repeatedly
             while (true) {
+                pPacket = new PressurePacket;
                 //TODO: this assumes that venturi is channel 1, pump is 2, and static is 3
                 dev->setConfig(CHANNEL1 | ONESHOT | RES_16_BITS | PGAx2);
                 dev->startConversion();
@@ -202,22 +209,23 @@ PI_THREAD(housekeeping) {
 }
 
 int main() {
-    // launch the ads1148_thread
+    /*// launch the ads1148_thread
     if (piThreadCreate(ads1148_thread) != 0) {
         perror("ADS1148 control thread didn't start");
-    }
+    }*/
     // launch the mcp3424_thread
     if (piThreadCreate(mcp3424_thread) != 0) {
         perror("MCP3424 control thread didn't start");
     }
-    // launch the rpm_thread
+    /*// launch the rpm_thread
     if (piThreadCreate(rpm_thread) != 0) {
         perror("RPM thread didn't start");
-    }
+    }*/
     // launch the housekeeping thread
     if (piThreadCreate(housekeeping) != 0) {
         perror("Housekeeping thread didn't start");
     }
+    sleep(500000);
 
     // This code changes the thread priority
     /*pid_t pid = getpid();
@@ -256,7 +264,7 @@ int main() {
             delete cmdPacket;
             cmdPacket = nullptr;
         }
-        sleep(500000);
+        usleep(500000);
     }
     return 0;
 }

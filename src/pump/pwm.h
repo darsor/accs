@@ -4,7 +4,7 @@
 
 // ============================================================================
 // Adafruit PCA9685 16-Channel PWM Servo Driver
-// Ported from Adafruit-Motor-HAT-Python-Library into c++
+// Ported from Adafruit-Motor-HAT-Python-Library into C++
 // ============================================================================
 
 // Registers/etc.

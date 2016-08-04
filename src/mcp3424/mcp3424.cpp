@@ -6,9 +6,8 @@
 
 // set up and configure the device
 MCP3424::MCP3424(int address, char bits) {
-    fd = wiringPiI2CSetup(address);
     // if it failed to open, print a message and throw an exception
-    if (fd < 0) {
+    if ((fd = wiringPiI2CSetup(address)) < 0) {
         perror("Failed to open MCP3424");
         throw 1;
     }
