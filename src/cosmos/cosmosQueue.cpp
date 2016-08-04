@@ -108,6 +108,15 @@ unsigned int CosmosQueue::cmdSize() {
     return cmdQueue.size();
 }
 
+uint8_t CosmosQueue::cmd_front_id() {
+    uint8_t temp;
+    cmd_mutex.lock();
+    if (cmdSize() > 0) temp = cmdQueue.front()->id;
+    else temp = -1;
+    cmd_mutex.unlock();
+    return temp;
+}
+
 void CosmosQueue::connect() {
     cosmos.acceptConnection();
     connected.store(true);
@@ -124,7 +133,6 @@ void CosmosQueue::tlm_thread() {
         connection_mutex.unlock();
         while (connected.load()) {
             while (pop_tlm());
-            //printf("emptied queue\n");
             usleep(10000);
         }
         printf("telemetry connection with COSMOS lost\n");
@@ -142,10 +150,9 @@ void CosmosQueue::cmd_thread() {
         connection_mutex.unlock();
         while (connected.load()) {
             // receive the first four bytes (the length of the packet);
-            if (cosmos.recvPacket(buffer, 4) < 4) {
-                printf("received fewer than 4 bytes\n");
-                usleep(100000);
-                continue;
+            if (cosmos.recvPacket(buffer, 4) < 0) {
+                connected.store(false);
+                break;
             } else {
                 memcpy(&u32, buffer, sizeof(u32));
                 length = ntohl(u32);

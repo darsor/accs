@@ -70,14 +70,20 @@ void ADS1148::getConversion(StampedConversion &conv, char pos, char neg) {
     // if no new channel was specified, send two bytes of NOP to read the result
     if (pos == 0 && neg == 0) {
         memset(cmd, SPI_NOP, 2);
-        wiringPiSPIDataRW(channel, (unsigned char*) cmd, 2);
+        if (wiringPiSPIDataRW(channel, (unsigned char*) cmd, 2) < 0) {
+            perror("Failed to communicate with ADS1148\n");
+            throw 1;
+        }
     // if there were new channels specified, use that command to read the result
     // SPI is full-duplex, so we can read the result and send the command at the same time
     } else {
         cmd[0] = SPI_WREG_MASK | REG_MUX0;
         cmd[1] = 0;
         cmd[2] = (pos << 3) | neg;
-        wiringPiSPIDataRW(channel, (unsigned char*) cmd, 3);
+        if (wiringPiSPIDataRW(channel, (unsigned char*) cmd, 3) < 0) {
+            perror("Failed to communicate with ADS1148\n");
+            throw 1;
+        }
     }
     // grab the timestamp that drdyISR() saved
     conv.timestamp = conversion.timestamp;
@@ -174,7 +180,10 @@ void ADS1148::writeReg(char reg, int bytes, const char* data) {
     // copy the values passed in by 'data' into the command
     memcpy(cmd+2, data, bytes);
     // send the command
-    wiringPiSPIDataRW(channel, (unsigned char*) cmd, 2+bytes);
+    if (wiringPiSPIDataRW(channel, (unsigned char*) cmd, 2+bytes) < 0) {
+        perror("Failed to communicate with ADS1148\n");
+        throw 1;
+    }
     usleep(100);
     delete[] cmd;
 }
@@ -194,7 +203,10 @@ void ADS1148::readReg(char reg, int bytes, char* data) {
     // set the rest of the command to NOP
     memset(cmd+2, SPI_NOP, bytes);
     // send the command
-    wiringPiSPIDataRW(channel, (unsigned char*) cmd, 2+bytes);
+    if (wiringPiSPIDataRW(channel, (unsigned char*) cmd, 2+bytes) < 0) {
+        perror("Failed to communicate with ADS1148\n");
+        throw 1;
+    }
     // copy the returned bytes in the the 'data' argument
     memcpy(data, cmd+2, bytes);
     delete[] cmd;

@@ -16,6 +16,7 @@ class CosmosQueue {
         void deleteFrontCmd();
         unsigned int tlmSize();
         unsigned int cmdSize();
+        uint8_t cmd_front_id();
 
         void connect();
         void disconnect();
@@ -35,4 +36,5 @@ class CosmosQueue {
         void tlm_thread();
         void cmd_thread();
 };
+
 #endif

@@ -32,96 +32,112 @@ uint64_t getTimestamp();
 // it collects and queues the TempPacket
 PI_THREAD(ads1148_thread) {
     ADS1148* dev = nullptr;
-    // try opening the ADS1148 every ten seconds until it succeeds
     while (true) {
+        // try opening the ADS1148 every ten seconds until it succeeds
+        while (true) {
+            try {
+                //TODO: increase the SPI bus speed
+                //TODO: change the DRDY pin
+                dev = new ADS1148(0, 100000, 4);
+                printf("Successfully opened the ADS1148\n");
+                break;
+            } catch (int e) {
+                printf("FAILED to open ADS1148. Trying again in 10 seconds...\n");
+                sleep(10);
+            }
+        }
+
+        //TODO: set ADS1148 settings (VREP, IEXT, etc.)
+        dev->setVREFsource(VREF_REF1);
+        TempPacket* tPacket = nullptr;
+        StampedConversion conv;
+
         try {
-            //TODO: increase the SPI bus speed
-            //TODO: change the DRDY pin
-            dev = new ADS1148(0, 100000, 4);
-            break;
+            // collect and send packets repeatedly
+            while (true) {
+                tPacket = new TempPacket;
+
+                // get channel 1 conversion and switch to channel 2
+                dev->getConversion(conv, AIN2, AIN3);
+                tPacket->time1 = conv.timestamp;
+                tPacket->temp1 = conv.code;
+
+                // get channel 2 conversion and switch to channel 3
+                dev->getConversion(conv, AIN4, AIN5);
+                tPacket->time2 = conv.timestamp;
+                tPacket->temp2 = conv.code;
+
+                // get channel 3 conversion and switch to channel 4
+                dev->getConversion(conv, AIN6, AIN7);
+                tPacket->time3 = conv.timestamp;
+                tPacket->temp3 = conv.code;
+
+                // get channel 4 conversion and switch to channel 1
+                dev->getConversion(conv, AIN0, AIN1);
+                tPacket->time4 = conv.timestamp;
+                tPacket->temp4 = conv.code;
+
+                queue.push_tlm(tPacket);
+            }
+        // if at any point it fails, delete the device then jump back up to
+        // the top and try to open/configure it again
         } catch (int e) {
-            printf("FAILED to open ADS1148. Trying again every 10 seconds...\n");
-            sleep(10);
+            printf("Lost connection with ADS1148\n");
+            delete dev;
+            continue;
         }
     }
-
-    //TODO: set ADS1148 settings (VREP, IEXT, etc.)
-    TempPacket* tPacket = nullptr;
-    StampedConversion conv;
-
-    //TODO: exit gracefully if sensor is disconnected,
-    //and try to reconnect
-    while (true) {
-        tPacket = new TempPacket;
-
-        // get channel 1 conversion and switch to channel 2
-        dev->getConversion(conv, AIN2, AIN3);
-        tPacket->time1 = conv.timestamp;
-        tPacket->temp1 = conv.code;
-
-        // get channel 2 conversion and switch to channel 3
-        dev->getConversion(conv, AIN4, AIN5);
-        tPacket->time2 = conv.timestamp;
-        tPacket->temp2 = conv.code;
-
-        // get channel 3 conversion and switch to channel 4
-        dev->getConversion(conv, AIN6, AIN7);
-        tPacket->time3 = conv.timestamp;
-        tPacket->temp3 = conv.code;
-
-        // get channel 4 conversion and switch to channel 1
-        dev->getConversion(conv, AIN0, AIN1);
-        tPacket->time4 = conv.timestamp;
-        tPacket->temp4 = conv.code;
-
-        queue.push_tlm(tPacket);
-    }
-    delete dev;
 }
 
 // this thread handles everything to do with the MCP3424
 // it collects and queues the VenturiPacket, PumpPacket, and StaticPackets
 PI_THREAD(mcp3424_thread) {
-    // try opening the MCP3424 every ten seconds until it succeeds
     MCP3424* dev = nullptr;
     while (true) {
+        // try opening the MCP3424 every ten seconds until it succeeds
+        while (true) {
+            try {
+                dev = new MCP3424(0x68, CHANNEL1 | ONESHOT | RES_16_BITS | PGAx2);
+                printf("Successfully opened the MCP3424\n");
+                break;
+            } catch (int e) {
+                printf("FAILED to open MCP3424. Trying again in 10 seconds...\n");
+                sleep(10);
+            }
+        }
+
+        PressurePacket* pPacket = nullptr;
+
         try {
-            dev = new MCP3424(0x68, CHANNEL1 | ONESHOT | RES_16_BITS | PGAx2);
-            break;
+            // get and queue the PressurePacket repeatedly
+            while (true) {
+                //TODO: this assumes that venturi is channel 1, pump is 2, and static is 3
+                dev->setConfig(CHANNEL1 | ONESHOT | RES_16_BITS | PGAx2);
+                dev->startConversion();
+                while (!dev->isReady()) usleep(1000);
+                pPacket->venturiTime = getTimestamp();
+                pPacket->venturiPressure = dev->getConversion();
+
+                dev->setConfig(CHANNEL2 | ONESHOT | RES_16_BITS | PGAx2);
+                dev->startConversion();
+                while (!dev->isReady()) usleep(1000);
+                pPacket->pumpTime = getTimestamp();
+                pPacket->pumpPressure = dev->getConversion();
+
+                dev->setConfig(CHANNEL3 | ONESHOT | RES_16_BITS | PGAx2);
+                dev->startConversion();
+                while (!dev->isReady()) usleep(1000);
+                pPacket->staticTime = getTimestamp();
+                pPacket->staticPressure = dev->getConversion();
+
+                queue.push_tlm(pPacket);
+            }
         } catch (int e) {
-            printf("FAILED to open MCP3424. Trying again every 10 seconds...\n");
-            sleep(10);
+            printf("Lost connection with MCP3424\n");
+            delete dev;
+            continue;
         }
     }
-
-    PressurePacket* pPacket = nullptr;
-
-    //TODO: exit gracefully if sensor is disconnected,
-    //and try to reconnect
-    // get and queue the PressurePacket
-    while (true) {
-        //TODO: this assumes that venturi is channel 1, pump is 2, and static is 3
-        dev->setConfig(CHANNEL1 | ONESHOT | RES_16_BITS | PGAx2);
-        dev->startConversion();
-        while (!dev->isReady()) usleep(1000);
-        pPacket->venturiTime = getTimestamp();
-        pPacket->venturiPressure = dev->getConversion();
-
-        dev->setConfig(CHANNEL2 | ONESHOT | RES_16_BITS | PGAx2);
-        dev->startConversion();
-        while (!dev->isReady()) usleep(1000);
-        pPacket->pumpTime = getTimestamp();
-        pPacket->pumpPressure = dev->getConversion();
-
-        dev->setConfig(CHANNEL3 | ONESHOT | RES_16_BITS | PGAx2);
-        dev->startConversion();
-        while (!dev->isReady()) usleep(1000);
-        pPacket->staticTime = getTimestamp();
-        pPacket->staticPressure = dev->getConversion();
-
-        queue.push_tlm(pPacket);
-    }
-    delete dev;
 }
 
 // this thread watches the RPM interrupts through rpmISR(), then
@@ -174,6 +190,7 @@ PI_THREAD(housekeeping) {
         hkPacket->mem_usage *= memInfo.mem_unit;
 
         queue.push_tlm(hkPacket);
+        sleep(1);
     }
     tempfile.close();
     loadfile.close();
