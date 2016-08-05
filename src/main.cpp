@@ -115,6 +115,7 @@ PI_THREAD(mcp3424_thread) {
         }
 
         PressurePacket* pPacket = nullptr;
+        LevelPacket* lPacket = nullptr;
 
         try {
             // get and queue the PressurePacket repeatedly
@@ -127,19 +128,29 @@ PI_THREAD(mcp3424_thread) {
                 pPacket->venturiTime = getTimestamp();
                 pPacket->venturiPressure = dev->getConversion();
 
-                dev->setConfig(CHANNEL2 | ONESHOT | RES_16_BITS | PGAx2);
+                /*dev->setConfig(CHANNEL2 | ONESHOT | RES_16_BITS | PGAx2);
                 dev->startConversion();
                 while (!dev->isReady()) usleep(1000);
                 pPacket->pumpTime = getTimestamp();
-                pPacket->pumpPressure = dev->getConversion();
+                pPacket->pumpPressure = dev->getConversion();*/
 
-                dev->setConfig(CHANNEL3 | ONESHOT | RES_16_BITS | PGAx2);
+                /*dev->setConfig(CHANNEL3 | ONESHOT | RES_16_BITS | PGAx2);
                 dev->startConversion();
                 while (!dev->isReady()) usleep(1000);
                 pPacket->staticTime = getTimestamp();
-                pPacket->staticPressure = dev->getConversion();
+                pPacket->staticPressure = dev->getConversion();*/
 
                 queue.push_tlm(pPacket);
+
+                // liquid level sensor packet: for now it's channel 2
+                dev->setConfig(CHANNEL2 | ONESHOT | RES_16_BITS | PGAx8);
+                dev->startConversion();
+                lPacket = new LevelPacket;
+                while (!dev->isReady()) usleep(1000);
+                lPacket->timestamp = getTimestamp();
+                lPacket->value = dev->getConversion();
+
+                queue.push_tlm(lPacket);
             }
         } catch (int e) {
             printf("Lost connection with MCP3424\n");

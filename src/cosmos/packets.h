@@ -13,6 +13,9 @@
 #define PUMP_CMD_ID         0x30
 #define PUMP_CMD_SIZE       9
 
+#define LEVEL_PKT_ID        0x40
+#define LEVEL_PKT_SIZE      17
+
 #define HK_PKT_ID           0xFF
 #define HK_PKT_SIZE         27
 
@@ -72,6 +75,14 @@ class RpmPacket: public Packet {
         void convert();
         uint64_t timestamp;
         uint16_t value;
+};
+
+class LevelPacket: public Packet {
+    public:
+        LevelPacket();
+        void convert();
+        uint64_t timestamp;
+        uint32_t value;
 };
 
 class HKPacket: public Packet {

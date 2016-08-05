@@ -23,8 +23,8 @@
 #define PGA_MASK        0b00000011
 #define PGAx1           0b00000000
 #define PGAx2           0b00000001
-#define PGAx3           0b00000010
-#define PGAx4           0b00000011
+#define PGAx4           0b00000010
+#define PGAx8           0b00000011
 
 #define RDY_MASK        0b10000000
 
@@ -52,7 +52,7 @@ class MCP3424 {
          *              Channel: CHANNEL1, CHANNEL2, CHANNEL3, or CHANNEL4
          *              Mode: ONESHOT or CONTINUOUS
          *              Resolution: RES_12_BITS, RES_14_BITS, RES_16_BITS, or RES_18_BITS
-         *              PGA: PGAx1, PGAx2, PGAx3, or PGAx4
+         *              PGA: PGAx1, PGAx2, PGAx4, or PGAx8
          *  Notes:
          *      See the constructor for an example of how to call this function
          *      (it takes the same arguments for it's 'bits' parameter
@@ -97,7 +97,7 @@ class MCP3424 {
         /*  MCP3424 toVoltage()
          *  Parameters:
          *      int32_t code - the conversion result given by getConversion()
-         *      int pga - the gain of the PGA (valid arguments are 1, 2, 3 or 4)
+         *      int pga - the gain of the PGA (valid arguments are 1, 2, 4 or 8)
          *      int resolution - resolution of the ADC (valid arguments are 12, 14, 16, or 18)
          *  Return values:
          *      float - the input voltage specified by the conversion result
