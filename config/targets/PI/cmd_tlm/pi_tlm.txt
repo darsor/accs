@@ -6,6 +6,7 @@ TELEMETRY PI PRESSURE LITTLE_ENDIAN "pressure sensor readings"
 		FORMAT_STRING "%.6f"
 	APPEND_ITEM VENTURI		 32 UINT "measured value from venturi pressure sensor"
 		READ_CONVERSION venturi.rb 16 1000 1
+		UNITS "milliliters per minute" "mL/min"
 	APPEND_ITEM PUMP_TIME    64 UINT "pump pressure timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
@@ -47,7 +48,11 @@ TELEMETRY PI LEVEL LITTLE_ENDIAN "Level sensor packet"
 	APPEND_ITEM LENGTH      32 UINT "length of packet in bytes"
     APPEND_ID_ITEM PKT_ID    8 UINT 64 "packet id which must be 0x40"
     APPEND_ITEM TIMESTAMP   64 UINT "system time in seconds since epoch"
+		READ_CONVERSION timestamp.rb
+		FORMAT_STRING "%.6f"
 	APPEND_ITEM LEVEL		32 UINT "liquid level sensor value"
+		READ_CONVERSION level.rb 16 8
+		UNITS "inches" "in"
 
 TELEMETRY PI HOUSEKEEPING LITTLE_ENDIAN "housekeeping telemetry"
     APPEND_ITEM LENGTH      32 UINT  "length of packet in bytes"
