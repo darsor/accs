@@ -1,4 +1,3 @@
-USER_MODIFIED
 "lib/user_version.rb" 0x8F282EE9
 "config/data/README.txt" 0x93B2C07E
 "config/system/system.txt" 0x9178EE79
@@ -8,9 +7,12 @@ USER_MODIFIED
 "config/targets/COSMOS/screens/limits_change.txt" 0xE8C47C54
 "config/targets/COSMOS/screens/version.txt" 0x393D4F72
 "config/targets/COSMOS/target.txt" 0x6C6F9A95
-"config/targets/PI/cmd_tlm/pi_cmd.txt" 0xF429C572
-"config/targets/PI/cmd_tlm/pi_tlm.txt" 0xB32B0430
-"config/targets/PI/cmd_tlm_server.txt" 0x02503EB2
+"config/targets/PI/cmd_tlm/pi_cmd.txt" 0x7B0D21F9
+"config/targets/PI/cmd_tlm/pi_tlm.txt" 0x1154534D
+"config/targets/PI/cmd_tlm_server.txt" 0x012DF6FF
+"config/targets/PI/lib/timestamp.rb" 0x309999F9
+"config/targets/PI/lib/venturi.rb" 0xCCDCA4A0
+"config/targets/PI/target.txt" 0x66583E54
 "config/tools/cmd_tlm_server/cmd_tlm_server.txt" 0xC6819D73
 "config/tools/data_viewer/data_viewer.txt" 0xAEE0B7DF
 "config/tools/handbook_creator/default_toc.xsl" 0x4122A040
@@ -36,6 +38,7 @@ USER_MODIFIED
 "config/tools/test_runner/test_runner.txt" 0xD24409D2
 "config/tools/tlm_extractor/README.txt" 0x93B2C07E
 "config/tools/tlm_grapher/README.txt" 0x93B2C07E
+"config/tools/tlm_grapher/venturi.txt" 0xD1C6FAFB
 "config/tools/tlm_viewer/tlm_viewer.txt" 0xD9071527
 "tools/CmdExtractor" 0x96E82AC3
 "tools/CmdExtractor.bat" 0x09A34857

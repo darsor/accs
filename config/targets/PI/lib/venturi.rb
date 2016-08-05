@@ -11,8 +11,8 @@ module Cosmos
 	  @in2m = 0.0254
 	  @d1 = 0.269	# inches
 	  @d2 = 0.14 	# inches
-	  @a1 = PI*(@d1*@in2m)**2/4
-	  @a2 = PI*(@d2*@in2m)**2/4
+	  @a1 = PI*(@d1*@in2m)**2/4.0
+	  @a2 = PI*(@d2*@in2m)**2/4.0
     end
     def call(value, packet, buffer)
 	  # convert from ADC code to mA
