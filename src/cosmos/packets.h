@@ -2,7 +2,9 @@
 #define PACKETS_H
 
 #define PRES_PKT_ID         0x00
-#define PRES_PKT_SIZE       41
+#define PRES_PKT_SIZE       53
+#define ZERO_PRES_ID        0x01
+#define ZERO_PRES_SIZE      17
 
 #define TEMP_PKT_ID         0x10
 #define TEMP_PKT_SIZE       45
@@ -49,10 +51,13 @@ class PressurePacket: public Packet {
         void convert();
         uint64_t venturiTime;
         uint32_t venturiPressure;
+        float venturiZero;
         uint64_t pumpTime;
         uint32_t pumpPressure;
+        float pumpZero;
         uint64_t staticTime;
         uint32_t staticPressure;
+        float staticZero;
 };
 
 class TempPacket: public Packet {
@@ -101,6 +106,15 @@ class PumpCmd: public Packet {
         PumpCmd();
         void convert();
         float voltage;
+};
+
+class ZeroPressure: public Packet {
+    public:
+        ZeroPressure();
+        void convert();
+        float venturiZero;
+        float pumpZero;
+        float staticZero;
 };
 
 #endif

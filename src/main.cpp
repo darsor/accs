@@ -98,7 +98,7 @@ PI_THREAD(ads1148_thread) {
 }
 
 // this thread handles everything to do with the MCP3424
-// it collects and queues the VenturiPacket, PumpPacket, and StaticPackets
+// it collects and queues the pressure and level packets
 PI_THREAD(mcp3424_thread) {
     MCP3424* dev = nullptr;
     while (true) {
@@ -116,34 +116,39 @@ PI_THREAD(mcp3424_thread) {
 
         PressurePacket* pPacket = nullptr;
         LevelPacket* lPacket = nullptr;
+        Packet* cmdPacket = nullptr;
+        float vZero, sZero, pZero;
+        vZero = sZero = pZero = 0.0;
 
         try {
             // get and queue the PressurePacket repeatedly
             while (true) {
                 pPacket = new PressurePacket;
-                //TODO: this assumes that venturi is channel 1, pump is 2, and static is 3
                 dev->setConfig(CHANNEL1 | ONESHOT | RES_16_BITS | PGAx2);
                 dev->startConversion();
                 while (!dev->isReady()) usleep(1000);
                 pPacket->venturiTime = getTimestamp();
                 pPacket->venturiPressure = dev->getConversion();
 
-                /*dev->setConfig(CHANNEL2 | ONESHOT | RES_16_BITS | PGAx2);
-                dev->startConversion();
-                while (!dev->isReady()) usleep(1000);
-                pPacket->pumpTime = getTimestamp();
-                pPacket->pumpPressure = dev->getConversion();*/
-
-                /*dev->setConfig(CHANNEL3 | ONESHOT | RES_16_BITS | PGAx2);
+                dev->setConfig(CHANNEL2 | ONESHOT | RES_16_BITS | PGAx2);
                 dev->startConversion();
                 while (!dev->isReady()) usleep(1000);
                 pPacket->staticTime = getTimestamp();
-                pPacket->staticPressure = dev->getConversion();*/
+                pPacket->staticPressure = dev->getConversion();
 
+                dev->setConfig(CHANNEL3 | ONESHOT | RES_16_BITS | PGAx2);
+                dev->startConversion();
+                while (!dev->isReady()) usleep(1000);
+                pPacket->pumpTime = getTimestamp();
+                pPacket->pumpPressure = dev->getConversion();
+
+                pPacket->venturiZero = vZero;
+                pPacket->staticZero  = sZero;
+                pPacket->pumpZero    = pZero;
                 queue.push_tlm(pPacket);
 
-                // liquid level sensor packet: for now it's channel 2
-                dev->setConfig(CHANNEL2 | ONESHOT | RES_16_BITS | PGAx8);
+                // liquid level sensor on channel 4
+                dev->setConfig(CHANNEL4 | ONESHOT | RES_16_BITS | PGAx8);
                 dev->startConversion();
                 lPacket = new LevelPacket;
                 while (!dev->isReady()) usleep(1000);
@@ -151,6 +156,15 @@ PI_THREAD(mcp3424_thread) {
                 lPacket->value = dev->getConversion();
 
                 queue.push_tlm(lPacket);
+
+                if (queue.cmdSize() > 0 && queue.cmd_front_id() == ZERO_PRES_ID) {
+                    queue.pop_cmd(cmdPacket);
+                    ZeroPressure* zCmd = static_cast<ZeroPressure*>(cmdPacket);
+                    zCmd->ZeroPressure::convert();
+                    vZero = zCmd->venturiZero;
+                    sZero = zCmd->staticZero;
+                    pZero = zCmd->pumpZero;
+                }
             }
         } catch (int e) {
             printf("Lost connection with MCP3424\n");
@@ -263,7 +277,7 @@ int main() {
     // loop over and over, waiting for a pump command
     while (true) {
         // if there's a pump command:
-        if (queue.cmdSize() > 0 && queue.cmd_front_id() == 0x30) {
+        if (queue.cmdSize() > 0 && queue.cmd_front_id() == PUMP_CMD_ID) {
             queue.pop_cmd(cmdPacket);
             PumpCmd* pCmd = static_cast<PumpCmd*>(cmdPacket);
             pCmd->PumpCmd::convert();

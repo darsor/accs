@@ -26,7 +26,11 @@ Packet& Packet::operator=(const Packet& that) {
 }
 void Packet::convert() { printf("Virtual convert() called. That's a problem\n"); }
 
-PressurePacket::PressurePacket() : Packet(PRES_PKT_SIZE, PRES_PKT_ID) {}
+PressurePacket::PressurePacket() : Packet(PRES_PKT_SIZE, PRES_PKT_ID) {
+    venturiZero = 0;
+    pumpZero = 0;
+    staticZero = 0;
+}
 
 void PressurePacket::convert() {
     if (!buffer) buffer = new unsigned char[length];
@@ -34,10 +38,13 @@ void PressurePacket::convert() {
     memcpy(buffer+4 , &id             , 1);
     memcpy(buffer+5 , &venturiTime    , 8);
     memcpy(buffer+13, &venturiPressure, 4);
-    memcpy(buffer+17, &pumpTime       , 8);
-    memcpy(buffer+25, &pumpPressure   , 4);
-    memcpy(buffer+29, &staticTime     , 8);
-    memcpy(buffer+37, &staticPressure , 4);
+    memcpy(buffer+17, &venturiZero    , 4);
+    memcpy(buffer+21, &pumpTime       , 8);
+    memcpy(buffer+29, &pumpPressure   , 4);
+    memcpy(buffer+33, &pumpZero       , 4);
+    memcpy(buffer+37, &staticTime     , 8);
+    memcpy(buffer+45, &staticPressure , 4);
+    memcpy(buffer+49, &staticZero     , 4);
 }
 
 TempPacket::TempPacket() : Packet(TEMP_PKT_SIZE, TEMP_PKT_ID) {}
@@ -94,4 +101,13 @@ PumpCmd::PumpCmd() : Packet(PUMP_CMD_SIZE, PUMP_CMD_ID, true) {}
 void PumpCmd::convert() {
     if (!buffer) return;
     memcpy(&voltage, buffer+5, sizeof(voltage));
+}
+
+ZeroPressure::ZeroPressure() : Packet (ZERO_PRES_SIZE, ZERO_PRES_ID, true) {}
+
+void ZeroPressure::convert() {
+    if (!buffer) return;
+    memcpy(&venturiZero, buffer+ 5, sizeof(venturiZero));
+    memcpy(&pumpZero   , buffer+ 9, sizeof(pumpZero)   );
+    memcpy(&staticZero , buffer+13, sizeof(staticZero) );
 }
