@@ -1,20 +1,44 @@
 TELEMETRY PI PRESSURE LITTLE_ENDIAN "pressure sensor readings"
     APPEND_ITEM LENGTH       32 UINT "length of packet in bytes"
     APPEND_ID_ITEM PKT_ID     8 UINT 0 "packet id which must be 0x00"
+	
 	APPEND_ITEM VENTURI_TIME 64 UINT "venturi pressure timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM VENTURI		 32 UINT "measured value from venturi pressure sensor"
-		READ_CONVERSION venturi.rb 16 1000 1
+	APPEND_ITEM VENTURI		 32 UINT "venturi meter ADC code"
+	ITEM VENTURI_VOLTS		0 0 DERIVED "voltage measurement of venturi ADC"
+		READ_CONVERSION processor_conversion.rb CONVERSIONS VENTURI_VOLTS
+		UNITS "volts" "V"
+	ITEM VENTURI_CURRENT	0 0 DERIVED "current measurement of venturi ADC"
+		READ_CONVERSION processor_conversion.rb CONVERSIONS VENTURI_CURRENT
+		UNITS "milliamps" "mA"
+	ITEM VENTURI_PRESSURE	0 0 DERIVED "differential pressure measurement of venturi"
+		READ_CONVERSION processor_conversion.rb CONVERSIONS VENTURI_DIFF
+		UNITS "Differential PSI" "psid"
+	ITEM VENTURI_FLOW		0 0 DERIVED "flow rate measurement of venturi"
+		READ_CONVERSION processor_conversion.rb CONVERSIONS VENTURI_FLOW
 		UNITS "milliliters per minute" "mL/min"
+		
 	APPEND_ITEM PUMP_TIME    64 UINT "pump pressure timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM PUMP		 32 UINT "measured value from pump pressure sensor"
+	APPEND_ITEM PUMP		 32 UINT "measured ADC code from pump pressure sensor"
+	
 	APPEND_ITEM STATIC_TIME  64 UINT "static pressure timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM STATIC		 32 UINT "measured value from static pressure sensor"
+	APPEND_ITEM STATIC		 32 UINT "measured ADC code from static pressure sensor"
+	ITEM STATIC_VOLTS		0 0 DERIVED "voltage measurement of static pressure ADC"
+		READ_CONVERSION processor_conversion.rb CONVERSIONS STATIC_VOLTS
+		UNITS "volts" "V"
+	ITEM STATIC_CURRENT		0 0 DERIVED "current measurement of static pressure ADC"
+		READ_CONVERSION processor_conversion.rb CONVERSIONS STATIC_CURRENT
+		UNITS "milliamps" "mA"
+	ITEM STATIC_PRESSURE	0 0 DERIVED "pressure measurement of static pressure"
+		READ_CONVERSION processor_conversion.rb CONVERSIONS STATIC_PRESSURE
+		UNITS "Gauge PSI" "psig"
+	
+	PROCESSOR CONVERSIONS pressure_processor.rb 16 1000 1
 
 TELEMETRY PI TEMPERATURE LITTLE_ENDIAN "temperature sensor reading"
     APPEND_ITEM LENGTH      32 UINT "length of packet in bytes"
