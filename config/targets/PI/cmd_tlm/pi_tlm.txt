@@ -5,61 +5,105 @@ TELEMETRY PI PRESSURE LITTLE_ENDIAN "pressure sensor readings"
 	APPEND_ITEM VENTURI_TIME 64 UINT "venturi pressure timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM VENTURI		 32 UINT "venturi meter ADC code"
+	APPEND_ITEM VENTURI_RAW	 32 UINT "venturi meter ADC code"
+	APPEND_ITEM VENTURI_ZERO 32 FLOAT "zero value for venturi pressure"
 	ITEM VENTURI_VOLTS		0 0 DERIVED "voltage measurement of venturi ADC"
-		READ_CONVERSION processor_conversion.rb CONVERSIONS VENTURI_VOLTS
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS VENTURI_VOLTS
 		UNITS "volts" "V"
 	ITEM VENTURI_CURRENT	0 0 DERIVED "current measurement of venturi ADC"
-		READ_CONVERSION processor_conversion.rb CONVERSIONS VENTURI_CURRENT
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS VENTURI_CURRENT
 		UNITS "milliamps" "mA"
 	ITEM VENTURI_PRESSURE	0 0 DERIVED "differential pressure measurement of venturi"
-		READ_CONVERSION processor_conversion.rb CONVERSIONS VENTURI_DIFF
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS VENTURI_PRESSURE
 		UNITS "Differential PSI" "psid"
 	ITEM VENTURI_FLOW		0 0 DERIVED "flow rate measurement of venturi"
-		READ_CONVERSION processor_conversion.rb CONVERSIONS VENTURI_FLOW
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS VENTURI_FLOW
 		UNITS "milliliters per minute" "mL/min"
 		
 	APPEND_ITEM PUMP_TIME    64 UINT "pump pressure timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM PUMP		 32 UINT "measured ADC code from pump pressure sensor"
+	APPEND_ITEM PUMP_RAW	 32 UINT "measured ADC code from pump pressure sensor"
+	APPEND_ITEM PUMP_ZERO    32 FLOAT "zero value for pump pressure"
+	ITEM PUMP_VOLTS			0 0 DERIVED "voltage measurement of ADC from differential pressure across pump"
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS PUMP_VOLTS
+		UNITS "volts" "V"
+	ITEM PUMP_CURRENT		0 0 DERIVED "current measurement of ADC from differential pressure across pump"
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS PUMP_CURRENT
+		UNITS "milliamps" "mA"
+	ITEM PUMP_PRESSURE		0 0 DERIVED "pressure differential across pump"
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS PUMP_PRESSURE
+		UNITS "Differential PSI" "psid"
 	
 	APPEND_ITEM STATIC_TIME  64 UINT "static pressure timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM STATIC		 32 UINT "measured ADC code from static pressure sensor"
+	APPEND_ITEM STATIC_RAW	 32 UINT "measured ADC code from static pressure sensor"
+	APPEND_ITEM STATIC_ZERO  32 FLOAT "zero value for static pressure"
 	ITEM STATIC_VOLTS		0 0 DERIVED "voltage measurement of static pressure ADC"
-		READ_CONVERSION processor_conversion.rb CONVERSIONS STATIC_VOLTS
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS STATIC_VOLTS
 		UNITS "volts" "V"
 	ITEM STATIC_CURRENT		0 0 DERIVED "current measurement of static pressure ADC"
-		READ_CONVERSION processor_conversion.rb CONVERSIONS STATIC_CURRENT
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS STATIC_CURRENT
 		UNITS "milliamps" "mA"
 	ITEM STATIC_PRESSURE	0 0 DERIVED "pressure measurement of static pressure"
-		READ_CONVERSION processor_conversion.rb CONVERSIONS STATIC_PRESSURE
+		READ_CONVERSION processor_conversion.rb P_CONVERSIONS STATIC_PRESSURE
 		UNITS "Gauge PSI" "psig"
 	
-	PROCESSOR CONVERSIONS pressure_processor.rb 16 1000 1
+	PROCESSOR P_CONVERSIONS pressure_processor.rb 16 1000 1
+
 
 TELEMETRY PI TEMPERATURE LITTLE_ENDIAN "temperature sensor reading"
     APPEND_ITEM LENGTH      32 UINT "length of packet in bytes"
     APPEND_ID_ITEM PKT_ID    8 UINT 16 "packet id which must be 0x10"
+	
 	APPEND_ITEM TIME1       64 UINT "temp1 timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM TEMP1		16 UINT	"measured value from temperature sensor #1"
+	APPEND_ITEM TEMP1_RAW	16 UINT	"measured value from temperature sensor #1"
+	ITEM TEMP1_OHMS		0 0 DERIVED ""
+		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP1_OHMS
+		UNITS "ohms" "ohms"
+	ITEM TEMP1			0 0 DERIVED ""
+		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP1
+		UNITS "degrees celcius" "C"
+		
 	APPEND_ITEM TIME2       64 UINT "temp2 timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM TEMP2		16 UINT	"measured value from temperature sensor #2"
+	APPEND_ITEM TEMP2_RAW	16 UINT	"measured value from temperature sensor #2"
+	ITEM TEMP2_OHMS		0 0 DERIVED ""
+		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP2_OHMS
+		UNITS "ohms" "ohms"
+	ITEM TEMP2			0 0 DERIVED ""
+		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP2
+		UNITS "degrees celcius" "C"
+	
 	APPEND_ITEM TIME3       64 UINT "temp3 timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM TEMP3		16 UINT	"measured value from temperature sensor #3"
+	APPEND_ITEM TEMP3_RAW	16 UINT	"measured value from temperature sensor #3"
+	ITEM TEMP3_OHMS		0 0 DERIVED ""
+		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP3_OHMS
+		UNITS "ohms" "ohms"
+	ITEM TEMP3			0 0 DERIVED ""
+		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP3
+		UNITS "degrees celcius" "C"
+	
 	APPEND_ITEM TIME4       64 UINT "temp4 timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM TEMP4		16 UINT	"measured value from temperature sensor #4"
+	APPEND_ITEM TEMP4_RAW	16 UINT	"measured value from temperature sensor #4"
+	ITEM TEMP4_OHMS		0 0 DERIVED ""
+		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP4_OHMS
+		UNITS "ohms" "ohms"
+	ITEM TEMP4			0 0 DERIVED ""
+		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP4
+		UNITS "degrees celcius" "C"
+		
+	PROCESSOR TEMP_CONVERSIONS temperature_processor.rb
 	
+
 TELEMETRY PI RPM LITTLE_ENDIAN "RPM of the pump"
     APPEND_ITEM LENGTH      32 UINT "length of packet in bytes"
     APPEND_ID_ITEM PKT_ID    8 UINT 32 "packet id which must be 0x20"
@@ -68,15 +112,23 @@ TELEMETRY PI RPM LITTLE_ENDIAN "RPM of the pump"
 		FORMAT_STRING "%.6f"
 	APPEND_ITEM VALUE		16 UINT	"measured RPM of the pump"
 
+
 TELEMETRY PI LEVEL LITTLE_ENDIAN "Level sensor packet"
 	APPEND_ITEM LENGTH      32 UINT "length of packet in bytes"
     APPEND_ID_ITEM PKT_ID    8 UINT 64 "packet id which must be 0x40"
     APPEND_ITEM TIMESTAMP   64 UINT "system time in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM LEVEL		32 UINT "liquid level sensor value"
-		READ_CONVERSION level.rb 16 8
+	APPEND_ITEM LEVEL_RAW	32 UINT "liquid level sensor value"
+	ITEM LEVEL_VOLTS		0 0 DERIVED "ADC voltage measurement of level sensor"
+		READ_CONVERSION processor_conversion.rb L_P_CONVERSIONS LEVEL_VOLTS
+		UNITS "volts" "V"
+	ITEM LEVEL_INCHES		0 0 DERIVED "level of liquid level sensor in inches"
+		READ_CONVERSION processor_conversion.rb L_P_CONVERSIONS LEVEL_INCHES
 		UNITS "inches" "in"
+		
+	PROCESSOR L_P_CONVERSIONS level_processor.rb 16
+
 
 TELEMETRY PI HOUSEKEEPING LITTLE_ENDIAN "housekeeping telemetry"
     APPEND_ITEM LENGTH      32 UINT  "length of packet in bytes"

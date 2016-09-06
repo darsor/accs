@@ -1,5 +1,7 @@
 REQUIRE timestamp.rb
-REQUIRE level.rb
 REQUIRE pressure_processor.rb
+REQUIRE level_processor.rb
+REQUIRE zero_pressure_sensors.rb
+REQUIRE temperature_processor.rb
 IGNORE_PARAMETER LENGTH
 IGNORE_PARAMETER CMD_ID

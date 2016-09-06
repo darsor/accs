@@ -1,4 +1,12 @@
 COMMAND PI PUMP LITTLE_ENDIAN "Set pump voltage"
-    PARAMETER       LENGTH      0   32 UINT  9  9  9 "Length of packet in bytes, must be 8"
+    PARAMETER       LENGTH      0   32 UINT  9  9  9 "Length of packet in bytes, must be 9"
     ID_PARAMETER    CMD_ID      32   8 UINT 48 48 48 "ID of command, must be 0x30"
     PARAMETER       VOLTAGE     40  32 FLOAT 0 12  0 "Voltage given to pump, between 0 and 12V"
+	
+COMMAND PI ZERO_PRESSURE_SENSORS LITTLE_ENDIAN "Set pump voltage"
+    PARAMETER       LENGTH      0   32 UINT  17  17  17 "Length of packet in bytes, must be 17"
+    ID_PARAMETER    CMD_ID      32   8 UINT   1   1   1 "ID of command, must be 0x01"
+		WRITE_CONVERSION zero_pressure_sensors.rb
+	PARAMETER		V_ZERO		40	32 FLOAT MIN_FLOAT32 MAX_FLOAT32 0 "Zero value for Venturi Pressure"
+	PARAMETER		P_ZERO		72	32 FLOAT MIN_FLOAT32 MAX_FLOAT32 0 "Zero value for Pump Pressure"
+	PARAMETER		S_ZERO	   104	32 FLOAT MIN_FLOAT32 MAX_FLOAT32 0 "Zero value for Static Pressure"
