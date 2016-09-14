@@ -26,7 +26,8 @@ module Cosmos
 	
 	# convert volts to inches (level sensor)
 	def level(volts)
-	  return -1.6912*(volts.to_f)**2.0 + 7.9319 * volts.to_f + 0.2633
+	  #return -1.6912*(volts.to_f)**2.0 + 7.9319 * volts.to_f + 0.2633 #old calibration
+	  return -1.1323*(volts.to_f)**2.0 + 7.3056 * volts.to_f - 0.6381
 	end
 
     # Convert to configuration file string
