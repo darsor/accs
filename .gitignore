@@ -32,10 +32,10 @@
 build/
 
 # COSMOS
-/lib/
-/outputs/
-/procedures/
-/tools/
+/lib
+/outputs
+/procedures
+/tools
 /Gemfile*
 /Launcher*
 /Rakefile
