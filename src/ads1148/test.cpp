@@ -4,7 +4,7 @@
 
 int main() {
     StampedConversion conv;
-    ADS1148 dev(1, 100000, 4);
+    ADS1148 dev(0, 400000, 4);
     usleep(300000);
 
     printf("TEST 0: Reading MUX0 register\n");
@@ -16,20 +16,21 @@ int main() {
     getchar();
 
     printf("TEST 2: Writing SYS0 register\n");
-    dev.setPGA(PGAx32);
+    dev.setPGA(ADS1148_PGAx32);
     dev.setDataRate(DATA_40SPS);
     printf("register is 0x%02x, expecting 0x%02x\n", dev.readReg(REG_SYS0), 0b01010011);
     getchar();
 
     printf("TEST 3: Writing SYS0 register\n");
-    dev.setPGA(PGAx4);
+    dev.setPGA(ADS1148_PGAx4);
     dev.setDataRate(DATA_20SPS);
     printf("register is 0x%02x, expecting 0x%02x\n", dev.readReg(REG_SYS0), 0b00100010);
     getchar();
-    dev.setPGA(PGAx1);
+    dev.setPGA(ADS1148_PGAx1);
     dev.setDataRate(DATA_5SPS);
 
     printf("TEST 4: Turning on internal voltage reference\n");
+    dev.setVREFstate(VREF_OFF);
     printf("reference is turned off - test the voltage across the test points");
     getchar();
     dev.setVREFstate(VREF_ON);
@@ -70,63 +71,63 @@ int main() {
     getchar();
 
     printf("TEST 8: PGA gains");
-    dev.setPGA(PGAx1);
-    printf("PGAx1\n");
+    dev.setPGA(ADS1148_PGAx1);
+    printf("ADS1148_PGAx1\n");
     for (int i=0; i<5; ++i) {
         dev.getConversion(conv);
         printf("conversion code is %04x, timestamp is %lli\n", conv.code, conv.timestamp);
     }
     getchar();
-    dev.setPGA(PGAx2);
-    printf("PGAx2\n");
+    dev.setPGA(ADS1148_PGAx2);
+    printf("ADS1148_PGAx2\n");
     for (int i=0; i<5; ++i) {
         dev.getConversion(conv);
         printf("conversion code is %04x, timestamp is %lli\n", conv.code, conv.timestamp);
     }
     getchar();
-    dev.setPGA(PGAx4);
-    printf("PGAx4\n");
+    dev.setPGA(ADS1148_PGAx4);
+    printf("ADS1148_PGAx4\n");
     for (int i=0; i<5; ++i) {
         dev.getConversion(conv);
         printf("conversion code is %04x, timestamp is %lli\n", conv.code, conv.timestamp);
     }
     getchar();
-    dev.setPGA(PGAx8);
-    printf("PGAx8\n");
+    dev.setPGA(ADS1148_PGAx8);
+    printf("ADS1148_PGAx8\n");
     for (int i=0; i<5; ++i) {
         dev.getConversion(conv);
         printf("conversion code is %04x, timestamp is %lli\n", conv.code, conv.timestamp);
     }
     getchar();
-    dev.setPGA(PGAx16);
-    printf("PGAx16\n");
+    dev.setPGA(ADS1148_PGAx16);
+    printf("ADS1148_PGAx16\n");
     for (int i=0; i<5; ++i) {
         dev.getConversion(conv);
         printf("conversion code is %04x, timestamp is %lli\n", conv.code, conv.timestamp);
     }
     getchar();
-    dev.setPGA(PGAx32);
-    printf("PGAx32\n");
+    dev.setPGA(ADS1148_PGAx32);
+    printf("ADS1148_PGAx32\n");
     for (int i=0; i<5; ++i) {
         dev.getConversion(conv);
         printf("conversion code is %04x, timestamp is %lli\n", conv.code, conv.timestamp);
     }
     getchar();
-    dev.setPGA(PGAx64);
-    printf("PGAx64\n");
+    dev.setPGA(ADS1148_PGAx64);
+    printf("ADS1148_PGAx64\n");
     for (int i=0; i<5; ++i) {
         dev.getConversion(conv);
         printf("conversion code is %04x, timestamp is %lli\n", conv.code, conv.timestamp);
     }
     getchar();
-    dev.setPGA(PGAx128);
-    printf("PGAx128\n");
+    dev.setPGA(ADS1148_PGAx128);
+    printf("ADS1148_PGAx128\n");
     for (int i=0; i<5; ++i) {
         dev.getConversion(conv);
         printf("conversion code is %04x, timestamp is %lli\n", conv.code, conv.timestamp);
     }
     getchar();
-    dev.setPGA(PGAx1);
+    dev.setPGA(ADS1148_PGAx1);
 
     printf("TEST 9: DAC currents to IOUT1 and IOUT2\n");
     dev.setVREFstate(VREF_OFF);
@@ -177,8 +178,8 @@ int main() {
     }
     getchar();
 
-    printf("TEST 11: Data rate tests - PGAx2");
-    dev.setPGA(PGAx2);
+    printf("TEST 11: Data rate tests - ADS1148_PGAx2");
+    dev.setPGA(ADS1148_PGAx2);
     dev.setDataRate(DATA_5SPS);
     usleep(10000);
     printf("data rate is 5 sps\n");

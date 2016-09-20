@@ -143,6 +143,7 @@ void CosmosQueue::cmd_thread() {
     unsigned char buffer[128];
     uint32_t length;
     uint8_t id;
+    int received = 0;
     Packet* cmd;
     while (true) {
         connection_mutex.lock();
@@ -161,8 +162,8 @@ void CosmosQueue::cmd_thread() {
                     break;
                 }
                 // receive the rest of the packet
-                if (cosmos.recvPacket(buffer+4, length-4) < (int)(length-4)) {
-                    printf("failed to fetch entire packet\n");
+                if ((received = cosmos.recvPacket(buffer+4, length-4)) < (int)(length-4)) {
+                    printf("failed to fetch entire packet (%d/%d)\n", received+4, length);
                     connected.store(false);
                     break;
                 }

@@ -142,8 +142,8 @@ class ADS1148 {
          *  Notes:
          *      This will block until ADS1148 triggers its DRDY signal
          *      This function can be used repeatedly to get conversion outputs.
-         *      The optional arguments allow the user to select which channels the next
-         *      conversion will be done on
+         *      The optional arguments allow the user to select which channels the NEXT
+         *      conversion will be done on (not the one returned by the function)
          */
         void getConversion(StampedConversion &conv, char pos = 0, char neg = 0);
 
@@ -181,8 +181,8 @@ class ADS1148 {
         /*  ADS1148 setPGA
          *  Parameters:
          *      char pga - programmable gain amplifier
-         *          Valid arguments are PGAx1, PGAx2, PGAx4, PGAx8,
-         *          PGAx16, PGAx32, PGAx64, or PGAx128
+         *          Valid arguments are ADS1148_PGAx1, ADS1148_PGAx2, ADS1148_PGAx4, ADS1148_PGAx8,
+         *          ADS1148_PGAx16, ADS1148_PGAx32, ADS1148_PGAx64, or ADS1148_PGAx128
          *  Notes:
          *      Set the input gain on the analog pins (before conversion)
          */
