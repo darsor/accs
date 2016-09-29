@@ -156,7 +156,7 @@ void CosmosQueue::cmd_thread() {
                 break;
             } else {
                 memcpy(&length, buffer, sizeof(length));
-                printf("received packet of length %u\n", length);
+                //printf("received packet of length %u\n", length);
                 if (length < 5) {
                     connected.store(false);
                     break;
@@ -169,7 +169,7 @@ void CosmosQueue::cmd_thread() {
                 }
                 // get the id to know what command it is
                 memcpy(&id, buffer+4, sizeof(id));
-                printf("id is %d\n", id);
+                //printf("id is %d\n", id);
                 cmd = new Packet(length, id, true);
                 memcpy(cmd->buffer, buffer, length);
                 push_cmd(cmd);

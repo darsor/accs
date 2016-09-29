@@ -51,12 +51,12 @@ PI_THREAD(ads1148_thread) {
 
         //TODO: set ADS1148 settings (VREP, IEXT, etc.)
         try {
-            dev->setMux(AIN0, AIN1);
+            dev->setMux(AIN2, AIN0);
             dev->setVREFstate(VREF_ON);
             dev->setVREFsource(VREF_REF0);
             dev->setPGA(ADS1148_PGAx32);
             dev->setDataRate(DATA_20SPS);
-            dev->setDACpins(DAC_AIN0, DAC_AIN1);
+            dev->setDACpins(DAC_AIN2, DAC_AIN0);
             dev->setDACmagnitude(DAC_500uA);
         } catch (int e) {
             printf("failed to write ADS1148 settings\n");
@@ -72,28 +72,22 @@ PI_THREAD(ads1148_thread) {
                 tPacket = new TempPacket;
 
                 // get channel 1 conversion and switch to channel 2
-                dev->getConversion(conv, AIN2, AIN3);
-                dev->setDACpins(DAC_AIN2, DAC_AIN3);
+                dev->getConversion(conv, AIN1, AIN3);
+                dev->setDACpins(DAC_AIN1, DAC_AIN3);
                 tPacket->time1 = conv.timestamp;
                 tPacket->temp1 = conv.code;
 
                 // get channel 2 conversion and switch to channel 3
-                dev->getConversion(conv, AIN4, AIN5);
-                dev->setDACpins(DAC_AIN4, DAC_AIN5);
+                dev->getConversion(conv, AIN5, AIN7);
+                dev->setDACpins(DAC_AIN5, DAC_AIN7);
                 tPacket->time2 = conv.timestamp;
                 tPacket->temp2 = conv.code;
 
-                // get channel 3 conversion and switch to channel 4
-                //dev->getConversion(conv, AIN6, AIN7);
-                dev->getConversion(conv, AIN0, AIN1);
-                dev->setDACpins(DAC_AIN0, DAC_AIN1);
+                // get channel 3 conversion and switch to channel 1
+                dev->getConversion(conv, AIN2, AIN0);
+                dev->setDACpins(DAC_AIN2, DAC_AIN0);
                 tPacket->time3 = conv.timestamp;
                 tPacket->temp3 = conv.code;
-
-                // get channel 4 conversion and switch to channel 1
-                /*dev->getConversion(conv, AIN0, AIN1);
-                tPacket->time4 = conv.timestamp;
-                tPacket->temp4 = conv.code;*/
 
                 queue.push_tlm(tPacket);
             }
@@ -143,22 +137,22 @@ PI_THREAD(mcp3424_thread) {
                 dev->setConfig(CHANNEL2 | ONESHOT | RES_16_BITS | PGAx2);
                 dev->startConversion();
                 while (!dev->isReady()) usleep(1000);
-                pPacket->pumpTime = getTimestamp();
-                pPacket->pumpPressure = dev->getConversion();
+                pPacket->staticTime = getTimestamp();
+                pPacket->staticPressure = dev->getConversion();
 
                 dev->setConfig(CHANNEL3 | ONESHOT | RES_16_BITS | PGAx2);
                 dev->startConversion();
                 while (!dev->isReady()) usleep(1000);
-                pPacket->staticTime = getTimestamp();
-                pPacket->staticPressure = dev->getConversion();
+                pPacket->pumpTime = getTimestamp();
+                pPacket->pumpPressure = dev->getConversion();
 
                 pPacket->venturiZero = vZero;
                 pPacket->staticZero  = sZero;
                 pPacket->pumpZero    = pZero;
                 queue.push_tlm(pPacket);
 
-                // liquid level sensor on channel 3
-                /*dev->setConfig(CHANNEL3 | ONESHOT | RES_16_BITS | PGAx8);
+                // liquid level sensor on channel 4
+                /*dev->setConfig(CHANNEL4 | ONESHOT | RES_16_BITS | PGAx8);
                 dev->startConversion();
                 lPacket = new LevelPacket;
                 while (!dev->isReady()) usleep(1000);
@@ -201,7 +195,7 @@ PI_THREAD(rpm_thread) {
         //TODO make the delay more accurate
         sleep(1);
         end = count;
-        rPacket->value = 15 * (start - end);
+        rPacket->value = 15 * (start - end - 1500);
         rPacket->timestamp = getTimestamp();
         queue.push_tlm(rPacket);
     }
@@ -254,15 +248,14 @@ int main() {
     if (piThreadCreate(mcp3424_thread) != 0) {
         perror("MCP3424 control thread didn't start");
     }
-    /*// launch the rpm_thread
+    // launch the rpm_thread
     if (piThreadCreate(rpm_thread) != 0) {
         perror("RPM thread didn't start");
-    }*/
+    }
     // launch the housekeeping thread
     if (piThreadCreate(housekeeping) != 0) {
         perror("Housekeeping thread didn't start");
     }
-    sleep(500000);
 
     // This code changes the thread priority
     /*pid_t pid = getpid();
@@ -278,7 +271,7 @@ int main() {
     while (true) {
         try {
             // TODO: change PWM frequency?
-            pump = new DCMotor(3, 0x60, 1500);
+            pump = new DCMotor(1, 0x60, 1500);
             printf("Successfully opened the motor hat\n");
             break;
         } catch (int e) {

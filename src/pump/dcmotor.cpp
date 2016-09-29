@@ -76,7 +76,7 @@ void DCMotor::setGradSpeed(int speed) {
     for (int i=pwmSpeedOld; i != speed ; i += inc) {
         //printf("old speed: %d, current speed: %d, new speed: %d\n", pwmSpeedOld, i, speed);
         setSpeed(i);
-        usleep(3000);
+        //usleep(500);
     }
     setSpeed(speed);
     pwmSpeedOld = speed;
