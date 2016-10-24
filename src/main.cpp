@@ -4,6 +4,7 @@
 #include "cosmos/packets.h"     // for packet definitions
 #include "cosmos/cosmosQueue.h" // for cosmos tlm and cmd queues
 #include <wiringPi.h>           // for PI_THREAD
+#include <thread>               // for multiple threads
 #include <string>               // for strings
 #include <fstream>              // for reading system files
 #include <cstdio>               // for printf() and perror()
@@ -31,7 +32,7 @@ uint64_t getTimestamp();
 
 // this thread handles everything to do with the ADS1148
 // it collects and queues the TempPacket
-PI_THREAD(ads1148_thread) {
+void ads1148_thread() {
     ADS1148* dev = nullptr;
     while (true) {
         // try opening the ADS1148 every ten seconds until it succeeds
@@ -101,19 +102,19 @@ PI_THREAD(ads1148_thread) {
     }
 }
 
-// this thread handles everything to do with the MCP3424
-// it collects and queues the pressure and level packets
-PI_THREAD(mcp3424_thread) {
+// this thread handles everything to do with the first MCP3424
+// it collects and queues the pressure packets
+void mcp3424_thread1() {
     MCP3424* dev = nullptr;
     while (true) {
         // try opening the MCP3424 every ten seconds until it succeeds
         while (true) {
             try {
                 dev = new MCP3424(0x68, CHANNEL1 | ONESHOT | RES_16_BITS | PGAx2);
-                printf("Successfully opened the MCP3424\n");
+                printf("Successfully opened the pressure MCP3424\n");
                 break;
             } catch (int e) {
-                printf("FAILED to open MCP3424. Trying again in 10 seconds...\n");
+                printf("FAILED to open the pressure MCP3424. Trying again in 10 seconds...\n");
                 sleep(10);
             }
         }
@@ -173,7 +174,52 @@ PI_THREAD(mcp3424_thread) {
                 }
             }
         } catch (int e) {
-            printf("Lost connection with MCP3424\n");
+            printf("Lost connection with pressure MCP3424\n");
+            delete dev;
+            continue;
+        }
+    }
+}
+
+// this thread handles everything to do with the second MCP3424
+// it collects and queues the power packets (voltage/current)
+void mcp3424_thread2() {
+    MCP3424* dev = nullptr;
+    while (true) {
+        // try opening the MCP3424 every ten seconds until it succeeds
+        while (true) {
+            try {
+                dev = new MCP3424(0x6A, CHANNEL1 | ONESHOT | RES_16_BITS | PGAx2);
+                printf("Successfully opened the power MCP3424\n");
+                break;
+            } catch (int e) {
+                printf("FAILED to open power MCP3424. Trying again in 10 seconds...\n");
+                sleep(10);
+            }
+        }
+
+        PowerPacket* pPacket = nullptr;
+
+        try {
+            // get and queue the PressurePacket repeatedly
+            while (true) {
+                pPacket = new PowerPacket;
+                dev->setConfig(CHANNEL1 | ONESHOT | RES_16_BITS | PGAx1);
+                dev->startConversion();
+                while (!dev->isReady()) usleep(1000);
+                pPacket->voltageTime = getTimestamp();
+                pPacket->voltage = dev->getConversion();
+
+                dev->setConfig(CHANNEL4 | ONESHOT | RES_16_BITS | PGAx2);
+                dev->startConversion();
+                while (!dev->isReady()) usleep(1000);
+                pPacket->amperageTime = getTimestamp();
+                pPacket->amperage = dev->getConversion();
+
+                queue.push_tlm(pPacket);
+            }
+        } catch (int e) {
+            printf("Lost connection with power MCP3424\n");
             delete dev;
             continue;
         }
@@ -182,7 +228,7 @@ PI_THREAD(mcp3424_thread) {
 
 // this thread watches the RPM interrupts through rpmISR(), then
 // constructs the RpmPacket and queues it
-PI_THREAD(rpm_thread) {
+void rpm_thread() {
     RpmPacket* rPacket = nullptr;
     // start the ISR (Interrupt Sub-Routine)
     wiringPiSetup();
@@ -203,7 +249,7 @@ PI_THREAD(rpm_thread) {
 
 // this thread puts together a housekeeping packet that it
 // queues every second
-PI_THREAD(housekeeping) {
+void housekeeping() {
     HKPacket* hkPacket = nullptr;
     std::ifstream tempfile("/sys/class/thermal/thermal_zone0/temp");
     std::ifstream loadfile("/proc/loadavg");
@@ -240,22 +286,12 @@ PI_THREAD(housekeeping) {
 }
 
 int main() {
-    // launch the ads1148_thread
-    if (piThreadCreate(ads1148_thread) != 0) {
-        perror("ADS1148 control thread didn't start");
-    }
-    // launch the mcp3424_thread
-    if (piThreadCreate(mcp3424_thread) != 0) {
-        perror("MCP3424 control thread didn't start");
-    }
-    // launch the rpm_thread
-    if (piThreadCreate(rpm_thread) != 0) {
-        perror("RPM thread didn't start");
-    }
-    // launch the housekeeping thread
-    if (piThreadCreate(housekeeping) != 0) {
-        perror("Housekeeping thread didn't start");
-    }
+    // launch each thread
+    std::thread(ads1148_thread).detach();
+    std::thread(mcp3424_thread1).detach();
+    std::thread(mcp3424_thread2).detach();
+    std::thread(rpm_thread).detach();
+    std::thread(housekeeping).detach();
 
     // This code changes the thread priority
     /*pid_t pid = getpid();

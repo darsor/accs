@@ -83,6 +83,18 @@ void LevelPacket::convert() {
     memcpy(buffer+13, &value    , 4);
 }
 
+PowerPacket::PowerPacket() : Packet(POWER_PKT_SIZE, POWER_PKT_ID) {}
+
+void PowerPacket::convert() {
+    if (!buffer) buffer = new unsigned char[length];
+    memcpy(buffer+0 , &length      , 4);
+    memcpy(buffer+4 , &id          , 1);
+    memcpy(buffer+5 , &voltageTime , 8);
+    memcpy(buffer+13, &voltage     , 4);
+    memcpy(buffer+17, &amperageTime, 8);
+    memcpy(buffer+25, &amperage    , 4);
+}
+
 HKPacket::HKPacket() : Packet(HK_PKT_SIZE, HK_PKT_ID) {}
 
 void HKPacket::convert() {

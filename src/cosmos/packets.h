@@ -18,6 +18,9 @@
 #define LEVEL_PKT_ID        0x40
 #define LEVEL_PKT_SIZE      17
 
+#define POWER_PKT_ID        0x50
+#define POWER_PKT_SIZE      29
+
 #define HK_PKT_ID           0xFF
 #define HK_PKT_SIZE         27
 
@@ -88,6 +91,16 @@ class LevelPacket: public Packet {
         void convert();
         uint64_t timestamp;
         uint32_t value;
+};
+
+class PowerPacket: public Packet {
+    public:
+        PowerPacket();
+        void convert();
+        uint64_t voltageTime;
+        uint32_t voltage;
+        uint64_t amperageTime;
+        uint32_t amperage;
 };
 
 class HKPacket: public Packet {
