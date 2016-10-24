@@ -1,8 +1,7 @@
 require 'cosmos/processors/processor'
-include Math
 module Cosmos
 
-  class LevelProcessor < Processor
+  class PowerProcessor < Processor
 
     # @param resolution: ADC resolution (12, 14, 16, or 18)
     def initialize(resolution)
@@ -11,23 +10,24 @@ module Cosmos
 	  @max = 2**(resolution.to_f-1)-1
     end
 
-    # Run conversions on the pressure readings
+    # Run conversions on the power readings
     #
     # See Processor#call
     def call(packet, buffer)
-	  @results[:LEVEL_VOLTS] = voltage(packet.read("LEVEL_RAW", :RAW, buffer))
-	  @results[:LEVEL_INCHES] = level(@results[:LEVEL_VOLTS])
+	  @results[:VOLTAGE] = voltage(packet.read("VOLTAGE_RAW", :RAW, buffer))
+	  @results[:AMPERAGE] = voltage(packet.read("AMPERAGE_RAW", :RAW, buffer))
     end
 	
 	# convert ADC code to voltage
-	def voltage(code, gain=8.0)
+	def voltage(code, gain=1.0)
 	  return (code.to_f / @max.to_f) * (2.048 / gain.to_f) * (180.0 / 33.0)
 	end
 	
-	# convert volts to inches (level sensor)
-	def level(volts)
-	  #return -1.6912*(volts.to_f)**2.0 + 7.9319 * volts.to_f + 0.2633 #old calibration
-	  return -1.1323*(volts.to_f)**2.0 + 7.3056 * volts.to_f - 0.6381
+	# convert ADC code to amperage
+	def amperage(code, gain=8.0)
+	  volts = (code.to_f / @max.to_f) * (2.048 / gain.to_f) * (180.0 / 33.0)
+	  # i = V / R
+	  return volts / 0.51;
 	end
 
     # Convert to configuration file string
@@ -35,6 +35,5 @@ module Cosmos
       "  PROCESSOR #{@name} #{self.class.name.to_s.class_name_to_filename} #{@item_name} #{@value_type}\n"
     end
 
-  end # class LevelProcessor
 
 end # module Cosmos

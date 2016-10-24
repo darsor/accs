@@ -119,15 +119,36 @@ TELEMETRY PI LEVEL LITTLE_ENDIAN "Level sensor packet"
     APPEND_ITEM TIMESTAMP   64 UINT "system time in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
-	APPEND_ITEM LEVEL_RAW	32 UINT "liquid level sensor value"
+	APPEND_ITEM LEVEL_RAW	32 UINT "raw liquid level sensor value"
 	ITEM LEVEL_VOLTS		0 0 DERIVED "ADC voltage measurement of level sensor"
-		READ_CONVERSION processor_conversion.rb L_P_CONVERSIONS LEVEL_VOLTS
+		READ_CONVERSION processor_conversion.rb L_CONVERSIONS LEVEL_VOLTS
 		UNITS "volts" "V"
 	ITEM LEVEL_INCHES		0 0 DERIVED "level of liquid level sensor in inches"
-		READ_CONVERSION processor_conversion.rb L_P_CONVERSIONS LEVEL_INCHES
+		READ_CONVERSION processor_conversion.rb L_CONVERSIONS LEVEL_INCHES
 		UNITS "inches" "in"
 		
-	PROCESSOR L_P_CONVERSIONS level_processor.rb 16
+	PROCESSOR L_CONVERSIONS level_processor.rb 16
+
+
+TELEMETRY PI POWER LITTLE_ENDIAN "Pump power packet"
+	APPEND_ITEM LENGTH      		32 UINT "length of packet in bytes"
+	
+    APPEND_ITEM VOLTAGE_TIMESTAMP   64 UINT "voltage - system timestamp in seconds since epoch"
+		READ_CONVERSION timestamp.rb
+		FORMAT_STRING "%.6f"
+	APPEND_ITEM VOLTAGE_RAW			32 UINT "raw measurement of voltage used to drive pump"
+	ITEM VOLTAGE_RAW				0 0 DERIVED "measurement of voltage used to drive pump"
+		READ_CONVERSION processor_conversion.rb POWER_CONVERSIONS VOLTAGE
+		UNITS "volts" "V"
+
+		READ_CONVERSION timestamp.rb
+		FORMAT_STRING "%.6f"
+	APPEND_ITEM AMPERAGE_RAW		32 UINT "raw measurement of amperage pulled by pump"
+	ITEM AMPERAGE					0 0 DERIVED "measurement of amperage pulled by pump"
+		READ_CONVERSION processor_conversion.rb POWER_CONVERSIONS AMPERAGE
+		UNITS "amperes" "A"
+		
+	PROCESSOR POWER_CONVERSIONS power_processor.rb 16
 
 
 TELEMETRY PI HOUSEKEEPING LITTLE_ENDIAN "housekeeping telemetry"
