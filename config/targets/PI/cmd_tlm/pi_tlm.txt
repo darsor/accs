@@ -132,6 +132,7 @@ TELEMETRY PI LEVEL LITTLE_ENDIAN "Level sensor packet"
 
 TELEMETRY PI POWER LITTLE_ENDIAN "Pump power packet"
 	APPEND_ITEM LENGTH      		32 UINT "length of packet in bytes"
+    APPEND_ID_ITEM PKT_ID    		8 UINT 0x50 "packet id which must be 0x50"
 	
     APPEND_ITEM VOLTAGE_TIMESTAMP   64 UINT "voltage - system timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
@@ -141,6 +142,7 @@ TELEMETRY PI POWER LITTLE_ENDIAN "Pump power packet"
 		READ_CONVERSION processor_conversion.rb POWER_CONVERSIONS VOLTAGE
 		UNITS "volts" "V"
 
+	APPEND_ITEM AMPERAGE_TIMESTAMP  64 UINT "amperage - system timestamp in seconds since epoch"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
 	APPEND_ITEM AMPERAGE_RAW		32 UINT "raw measurement of amperage pulled by pump"

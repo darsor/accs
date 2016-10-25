@@ -35,5 +35,6 @@ module Cosmos
       "  PROCESSOR #{@name} #{self.class.name.to_s.class_name_to_filename} #{@item_name} #{@value_type}\n"
     end
 
+  end # class PowerProcessor
 
 end # module Cosmos
