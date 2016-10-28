@@ -138,7 +138,7 @@ TELEMETRY PI POWER LITTLE_ENDIAN "Pump power packet"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
 	APPEND_ITEM VOLTAGE_RAW			32 UINT "raw measurement of voltage used to drive pump"
-	ITEM VOLTAGE_RAW				0 0 DERIVED "measurement of voltage used to drive pump"
+	ITEM VOLTAGE					0 0 DERIVED "measurement of voltage used to drive pump"
 		READ_CONVERSION processor_conversion.rb POWER_CONVERSIONS VOLTAGE
 		UNITS "volts" "V"
 
@@ -149,6 +149,10 @@ TELEMETRY PI POWER LITTLE_ENDIAN "Pump power packet"
 	ITEM AMPERAGE					0 0 DERIVED "measurement of amperage pulled by pump"
 		READ_CONVERSION processor_conversion.rb POWER_CONVERSIONS AMPERAGE
 		UNITS "amperes" "A"
+		
+	ITEM WATTS						0 0 DERIVED "measurement of power consumed by pump"
+		READ_CONVERSION processor_conversion.rb POWER_CONVERSIONS POWER
+		UNITS "Watts" "W"
 		
 	PROCESSOR POWER_CONVERSIONS power_processor.rb 16
 
