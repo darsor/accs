@@ -19,7 +19,7 @@ module Cosmos
     end
 	
 	# convert ADC code to voltage
-	def voltage(code, gain=1.0)
+	def voltage(code, gain=0.5)
 	  return (code.to_f / @max.to_f) * (2.048 / gain.to_f) * (180.0 / 33.0)
 	end
 	
