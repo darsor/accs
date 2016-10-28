@@ -201,16 +201,16 @@ void mcp3424_thread2() {
         PowerPacket* pPacket = nullptr;
 
         try {
-            // get and queue the PressurePacket repeatedly
+            // get and queue the PowerPacket repeatedly
             while (true) {
                 pPacket = new PowerPacket;
-                dev->setConfig(CHANNEL1 | ONESHOT | RES_16_BITS | PGAx1);
+                dev->setConfig(CHANNEL3 | ONESHOT | RES_16_BITS | PGAx1);
                 dev->startConversion();
                 while (!dev->isReady()) usleep(1000);
                 pPacket->voltageTime = getTimestamp();
                 pPacket->voltage = dev->getConversion();
 
-                dev->setConfig(CHANNEL4 | ONESHOT | RES_16_BITS | PGAx2);
+                dev->setConfig(CHANNEL4 | ONESHOT | RES_16_BITS | PGAx8);
                 dev->startConversion();
                 while (!dev->isReady()) usleep(1000);
                 pPacket->amperageTime = getTimestamp();
