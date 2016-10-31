@@ -241,7 +241,7 @@ void rpm_thread() {
         //TODO make the delay more accurate
         sleep(1);
         end = count;
-        rPacket->value = 15 * (start - end - 1500);
+        rPacket->value = (start - end);
         rPacket->timestamp = getTimestamp();
         queue.push_tlm(rPacket);
     }
