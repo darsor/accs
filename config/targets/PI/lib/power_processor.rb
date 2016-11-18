@@ -28,7 +28,7 @@ module Cosmos
 	def amperage(code, gain=8.0)
 	  volts = (code.to_f / @max.to_f) * (2.048 / gain.to_f) * (180.0 / 33.0)
 	  # i = V / R
-	  return volts / 0.51;
+	  return volts / 0.03;
 	end
 
     # Convert to configuration file string
