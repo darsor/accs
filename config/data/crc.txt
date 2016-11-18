@@ -8,7 +8,7 @@
 "config/targets/COSMOS/screens/version.txt" 0x393D4F72
 "config/targets/COSMOS/target.txt" 0x6C6F9A95
 "config/targets/PI/cmd_tlm/pi_cmd.txt" 0x50639A73
-"config/targets/PI/cmd_tlm/pi_tlm.txt" 0x78E2C84C
+"config/targets/PI/cmd_tlm/pi_tlm.txt" 0xE3E2ED6F
 "config/targets/PI/cmd_tlm_server.txt" 0x012DF6FF
 "config/targets/PI/lib/level_processor.rb" 0xD3C37C56
 "config/targets/PI/lib/power_processor.rb" 0xE6593F4E
@@ -41,8 +41,11 @@
 "config/tools/table_manager/README.txt" 0x93B2C07E
 "config/tools/test_runner/test_runner.txt" 0xD24409D2
 "config/tools/tlm_extractor/diff-calibration.txt" 0xB96B9CA5
+"config/tools/tlm_extractor/everything.txt" 0x903660AD
 "config/tools/tlm_extractor/README.txt" 0x93B2C07E
+"config/tools/tlm_grapher/everything.txt" 0x95484862
 "config/tools/tlm_grapher/level.txt" 0x897E659A
+"config/tools/tlm_grapher/power.txt" 0x84A1E1E2
 "config/tools/tlm_grapher/pressure.txt" 0x71844A52
 "config/tools/tlm_grapher/README.txt" 0x93B2C07E
 "config/tools/tlm_grapher/temperatures.txt" 0x1D7DE415

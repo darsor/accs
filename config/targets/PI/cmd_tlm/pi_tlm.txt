@@ -61,10 +61,10 @@ TELEMETRY PI TEMPERATURE LITTLE_ENDIAN "temperature sensor reading"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
 	APPEND_ITEM TEMP1_RAW	16 UINT	"measured value from temperature sensor #1"
-	ITEM TEMP1_OHMS		0 0 DERIVED ""
+	ITEM TEMP1_OHMS		0 0 DERIVED "calculated ohmage of temperature sensor #1"
 		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP1_OHMS
 		UNITS "ohms" "ohms"
-	ITEM TEMP1			0 0 DERIVED ""
+	ITEM TEMP1			0 0 DERIVED "calculated temperature of temperature sensor #1"
 		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP1
 		UNITS "degrees celcius" "C"
 		
@@ -72,10 +72,10 @@ TELEMETRY PI TEMPERATURE LITTLE_ENDIAN "temperature sensor reading"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
 	APPEND_ITEM TEMP2_RAW	16 UINT	"measured value from temperature sensor #2"
-	ITEM TEMP2_OHMS		0 0 DERIVED ""
+	ITEM TEMP2_OHMS		0 0 DERIVED "calculated ohmage of temperature sensor #2"
 		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP2_OHMS
 		UNITS "ohms" "ohms"
-	ITEM TEMP2			0 0 DERIVED ""
+	ITEM TEMP2			0 0 DERIVED "calculated temperature of temperature sensor #1"
 		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP2
 		UNITS "degrees celcius" "C"
 	
@@ -83,10 +83,10 @@ TELEMETRY PI TEMPERATURE LITTLE_ENDIAN "temperature sensor reading"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
 	APPEND_ITEM TEMP3_RAW	16 UINT	"measured value from temperature sensor #3"
-	ITEM TEMP3_OHMS		0 0 DERIVED ""
+	ITEM TEMP3_OHMS		0 0 DERIVED "calculated ohmage of temperature sensor #3"
 		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP3_OHMS
 		UNITS "ohms" "ohms"
-	ITEM TEMP3			0 0 DERIVED ""
+	ITEM TEMP3			0 0 DERIVED "calculated temperature of temperature sensor #1"
 		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP3
 		UNITS "degrees celcius" "C"
 	
@@ -94,10 +94,10 @@ TELEMETRY PI TEMPERATURE LITTLE_ENDIAN "temperature sensor reading"
 		READ_CONVERSION timestamp.rb
 		FORMAT_STRING "%.6f"
 	APPEND_ITEM TEMP4_RAW	16 UINT	"measured value from temperature sensor #4"
-	ITEM TEMP4_OHMS		0 0 DERIVED ""
+	ITEM TEMP4_OHMS		0 0 DERIVED "calculated ohmage of temperature sensor #4"
 		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP4_OHMS
 		UNITS "ohms" "ohms"
-	ITEM TEMP4			0 0 DERIVED ""
+	ITEM TEMP4			0 0 DERIVED "calculated temperature of temperature sensor #1"
 		READ_CONVERSION processor_conversion.rb TEMP_CONVERSIONS TEMP4
 		UNITS "degrees celcius" "C"
 		
