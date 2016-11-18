@@ -1,0 +1,2409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>PI Command and Telemetry Handbook</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="assets/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container">
+<div class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="index.html">Command and Telemetry Handbook</a>
+  </div>
+  <div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+      <li><a href="command_handbook.html">All Commands</a></li>
+      <li><a href="telemetry_handbook.html">All Telemetry</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Targets <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          
+          
+          
+            <li><a href="cosmos_cmd_tlm.html">COSMOS</a></li>
+          
+            <li><a href="pi_cmd_tlm.html">PI</a></li>
+          
+        </ul>
+      </li>
+    </ul>
+  </div><!--/.nav-collapse -->
+</div>
+<h1>PI Command and Telemetry Handbook</h1>
+
+
+
+
+
+
+
+
+  <h2>Commands</h2>
+
+
+<div class="col-md-4">
+  <ul class="list-unstyled">
+    
+      <li><a href="#cmd_PI_PUMP">PI PUMP</a></li>
+    
+  </ul>
+</div>
+
+<div class="col-md-4">
+  <ul class="list-unstyled">
+    
+      <li><a href="#cmd_PI_ZERO_PRESSURE_SENSORS">PI ZERO_PRESSURE_SENSORS</a></li>
+    
+  </ul>
+</div>
+
+<div class="col-md-4">
+  <ul class="list-unstyled">
+    
+  </ul>
+</div>
+
+<div class="clearfix"></div>
+
+
+
+
+
+
+
+
+  <h2>Telemetry</h2>
+
+
+<div class="col-md-4">
+  <ul class="list-unstyled">
+    
+      <li><a href="#tlm_PI_HOUSEKEEPING">PI HOUSEKEEPING</a></li>
+    
+      <li><a href="#tlm_PI_LEVEL">PI LEVEL</a></li>
+    
+  </ul>
+</div>
+
+<div class="col-md-4">
+  <ul class="list-unstyled">
+    
+      <li><a href="#tlm_PI_POWER">PI POWER</a></li>
+    
+      <li><a href="#tlm_PI_PRESSURE">PI PRESSURE</a></li>
+    
+  </ul>
+</div>
+
+<div class="col-md-4">
+  <ul class="list-unstyled">
+    
+      <li><a href="#tlm_PI_RPM">PI RPM</a></li>
+    
+      <li><a href="#tlm_PI_TEMPERATURE">PI TEMPERATURE</a></li>
+    
+  </ul>
+</div>
+
+<div class="clearfix"></div>
+<h1 style="background:#555555;color:white;padding:10px;">Commands</h1>
+
+  <div id="cmd_PI_PUMP">
+    <h2>PI PUMP</h2>
+    <div><span style="font-size:18px;background:#555555;color:white;"></span></div>
+    <div>Set pump voltage</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th class="text-center">Min</th>
+          <th class="text-center">Max</th>
+          <th class="text-center">Default</th>
+          <th class="text-center">Bit Offset</th>
+          <th class="text-center">Bit Size</th>
+          <th class="text-center">Data Type</th>
+          <th class="text-center">Units</th>
+        </tr>
+      <thead>
+      <tbody>
+        
+          <tr>
+            <td>
+              LENGTH
+              
+            </td>
+            <td>
+              Length of packet in bytes, must be 9
+              
+              
+              
+            </td>
+            <td class="text-center" style="white-space: nowrap;">9</td>
+            <td class="text-center" style="white-space: nowrap;">9</td>
+            <td class="text-center" style="white-space: nowrap;">
+              9
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>
+              CMD_ID
+              
+            </td>
+            <td>
+              ID of command, must be 0x30
+              
+                <div><strong>Id Value: 48</strong></div>
+              
+              
+              
+            </td>
+            <td class="text-center" style="white-space: nowrap;">48</td>
+            <td class="text-center" style="white-space: nowrap;">48</td>
+            <td class="text-center" style="white-space: nowrap;">
+              48
+            </td>
+            <td class="text-center">32</td>
+            <td class="text-center">8</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>
+              VOLTAGE
+              
+            </td>
+            <td>
+              Voltage given to pump, between 0 and 12V
+              
+              
+              
+            </td>
+            <td class="text-center" style="white-space: nowrap;">0.0</td>
+            <td class="text-center" style="white-space: nowrap;">12.0</td>
+            <td class="text-center" style="white-space: nowrap;">
+              0.0
+            </td>
+            <td class="text-center">40</td>
+            <td class="text-center">32</td>
+            <td class="text-center">FLOAT</td>
+            <td class="text-center"></td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  <hr></hr>
+
+  <div id="cmd_PI_ZERO_PRESSURE_SENSORS">
+    <h2>PI ZERO_PRESSURE_SENSORS</h2>
+    <div><span style="font-size:18px;background:#555555;color:white;"></span></div>
+    <div>Set pump voltage</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th class="text-center">Min</th>
+          <th class="text-center">Max</th>
+          <th class="text-center">Default</th>
+          <th class="text-center">Bit Offset</th>
+          <th class="text-center">Bit Size</th>
+          <th class="text-center">Data Type</th>
+          <th class="text-center">Units</th>
+        </tr>
+      <thead>
+      <tbody>
+        
+          <tr>
+            <td>
+              LENGTH
+              
+            </td>
+            <td>
+              Length of packet in bytes, must be 17
+              
+              
+              
+            </td>
+            <td class="text-center" style="white-space: nowrap;">17</td>
+            <td class="text-center" style="white-space: nowrap;">17</td>
+            <td class="text-center" style="white-space: nowrap;">
+              17
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>
+              CMD_ID
+              
+            </td>
+            <td>
+              ID of command, must be 0x01
+              
+                <div><strong>Id Value: 1</strong></div>
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                  
+                    <tr><td>Write Conversion:</td><td>ZeroPressureSensors</td></tr>
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center" style="white-space: nowrap;">1</td>
+            <td class="text-center" style="white-space: nowrap;">1</td>
+            <td class="text-center" style="white-space: nowrap;">
+              1
+            </td>
+            <td class="text-center">32</td>
+            <td class="text-center">8</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>
+              V_ZERO
+              
+            </td>
+            <td>
+              Zero value for Venturi Pressure
+              
+              
+              
+            </td>
+            <td class="text-center" style="white-space: nowrap;">-3.402823e+38</td>
+            <td class="text-center" style="white-space: nowrap;">3.402823e+38</td>
+            <td class="text-center" style="white-space: nowrap;">
+              0.0
+            </td>
+            <td class="text-center">40</td>
+            <td class="text-center">32</td>
+            <td class="text-center">FLOAT</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>
+              P_ZERO
+              
+            </td>
+            <td>
+              Zero value for Pump Pressure
+              
+              
+              
+            </td>
+            <td class="text-center" style="white-space: nowrap;">-3.402823e+38</td>
+            <td class="text-center" style="white-space: nowrap;">3.402823e+38</td>
+            <td class="text-center" style="white-space: nowrap;">
+              0.0
+            </td>
+            <td class="text-center">72</td>
+            <td class="text-center">32</td>
+            <td class="text-center">FLOAT</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>
+              S_ZERO
+              
+            </td>
+            <td>
+              Zero value for Static Pressure
+              
+              
+              
+            </td>
+            <td class="text-center" style="white-space: nowrap;">-3.402823e+38</td>
+            <td class="text-center" style="white-space: nowrap;">3.402823e+38</td>
+            <td class="text-center" style="white-space: nowrap;">
+              0.0
+            </td>
+            <td class="text-center">104</td>
+            <td class="text-center">32</td>
+            <td class="text-center">FLOAT</td>
+            <td class="text-center"></td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  <hr></hr>
+
+<h1 style="background:#555555;color:white;padding:10px;">Telemetry Packets</h1>
+
+  <div id="tlm_PI_HOUSEKEEPING">
+    <h2>PI HOUSEKEEPING</h2>
+    <div>housekeeping telemetry</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th class="text-center">Bit Offset</th>
+          <th class="text-center">Bit Size</th>
+          <th class="text-center">Data Type</th>
+          <th class="text-center">Units</th>
+          <th class="text-center">Format</th>
+        </tr>
+      <thead>
+      <tbody>
+        
+          <tr>
+            <td>RECEIVED_TIMESECONDS</td>
+            <td>
+              COSMOS Received Time (UTC, Floating point, Unix epoch)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeSecondsConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center">%0.6f</td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_TIMEFORMATTED</td>
+            <td>
+              COSMOS Received Time (Local time zone, Formatted string)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeFormattedConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_COUNT</td>
+            <td>
+              COSMOS packet received count
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedCountConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>LENGTH</td>
+            <td>
+              length of packet in bytes
+              
+              
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PKT_ID</td>
+            <td>
+              packet id which must be 0xFF
+              
+                <div><strong>Id Value: 255</strong></div>
+              
+              
+              
+            </td>
+            <td class="text-center">32</td>
+            <td class="text-center">8</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TIMESTAMP</td>
+            <td>
+              system time in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">40</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>QUEUE_SIZE</td>
+            <td>
+              size of telemetry queue
+              
+              
+              
+            </td>
+            <td class="text-center">104</td>
+            <td class="text-center">16</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>CPU_TEMP</td>
+            <td>
+              temperature of CPU (degrees C)
+              
+              
+              
+            </td>
+            <td class="text-center">120</td>
+            <td class="text-center">32</td>
+            <td class="text-center">FLOAT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>CPU_LOAD</td>
+            <td>
+              one minute cpu load average
+              
+              
+              
+            </td>
+            <td class="text-center">152</td>
+            <td class="text-center">32</td>
+            <td class="text-center">FLOAT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>MEM_USAGE</td>
+            <td>
+              bytes of memory in use
+              
+              
+              
+            </td>
+            <td class="text-center">184</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  <hr></hr>
+
+  <div id="tlm_PI_LEVEL">
+    <h2>PI LEVEL</h2>
+    <div>Level sensor packet</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th class="text-center">Bit Offset</th>
+          <th class="text-center">Bit Size</th>
+          <th class="text-center">Data Type</th>
+          <th class="text-center">Units</th>
+          <th class="text-center">Format</th>
+        </tr>
+      <thead>
+      <tbody>
+        
+          <tr>
+            <td>RECEIVED_TIMESECONDS</td>
+            <td>
+              COSMOS Received Time (UTC, Floating point, Unix epoch)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeSecondsConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center">%0.6f</td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_TIMEFORMATTED</td>
+            <td>
+              COSMOS Received Time (Local time zone, Formatted string)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeFormattedConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_COUNT</td>
+            <td>
+              COSMOS packet received count
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedCountConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>LEVEL_VOLTS</td>
+            <td>
+              ADC voltage measurement of level sensor
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion L_CONVERSIONS LEVEL_VOLTS</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">V</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>LEVEL_INCHES</td>
+            <td>
+              level of liquid level sensor in inches
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion L_CONVERSIONS LEVEL_INCHES</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">in</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>LENGTH</td>
+            <td>
+              length of packet in bytes
+              
+              
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PKT_ID</td>
+            <td>
+              packet id which must be 0x40
+              
+                <div><strong>Id Value: 64</strong></div>
+              
+              
+              
+            </td>
+            <td class="text-center">32</td>
+            <td class="text-center">8</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TIMESTAMP</td>
+            <td>
+              system time in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">40</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>LEVEL_RAW</td>
+            <td>
+              raw liquid level sensor value
+              
+              
+              
+            </td>
+            <td class="text-center">104</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  <hr></hr>
+
+  <div id="tlm_PI_POWER">
+    <h2>PI POWER</h2>
+    <div>Pump power packet</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th class="text-center">Bit Offset</th>
+          <th class="text-center">Bit Size</th>
+          <th class="text-center">Data Type</th>
+          <th class="text-center">Units</th>
+          <th class="text-center">Format</th>
+        </tr>
+      <thead>
+      <tbody>
+        
+          <tr>
+            <td>RECEIVED_TIMESECONDS</td>
+            <td>
+              COSMOS Received Time (UTC, Floating point, Unix epoch)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeSecondsConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center">%0.6f</td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_TIMEFORMATTED</td>
+            <td>
+              COSMOS Received Time (Local time zone, Formatted string)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeFormattedConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_COUNT</td>
+            <td>
+              COSMOS packet received count
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedCountConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>VOLTAGE</td>
+            <td>
+              measurement of voltage used to drive pump
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion POWER_CONVERSIONS VOLTAGE</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">V</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>AMPERAGE</td>
+            <td>
+              measurement of amperage pulled by pump
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion POWER_CONVERSIONS AMPERAGE</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">A</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>WATTS</td>
+            <td>
+              measurement of power consumed by pump
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion POWER_CONVERSIONS POWER</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">W</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>LENGTH</td>
+            <td>
+              length of packet in bytes
+              
+              
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PKT_ID</td>
+            <td>
+              packet id which must be 0x50
+              
+                <div><strong>Id Value: 80</strong></div>
+              
+              
+              
+            </td>
+            <td class="text-center">32</td>
+            <td class="text-center">8</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>VOLTAGE_TIMESTAMP</td>
+            <td>
+              voltage - system timestamp in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">40</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>VOLTAGE_RAW</td>
+            <td>
+              raw measurement of voltage used to drive pump
+              
+              
+              
+            </td>
+            <td class="text-center">104</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>AMPERAGE_TIMESTAMP</td>
+            <td>
+              amperage - system timestamp in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">136</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>AMPERAGE_RAW</td>
+            <td>
+              raw measurement of amperage pulled by pump
+              
+              
+              
+            </td>
+            <td class="text-center">200</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  <hr></hr>
+
+  <div id="tlm_PI_PRESSURE">
+    <h2>PI PRESSURE</h2>
+    <div>pressure sensor readings</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th class="text-center">Bit Offset</th>
+          <th class="text-center">Bit Size</th>
+          <th class="text-center">Data Type</th>
+          <th class="text-center">Units</th>
+          <th class="text-center">Format</th>
+        </tr>
+      <thead>
+      <tbody>
+        
+          <tr>
+            <td>RECEIVED_TIMESECONDS</td>
+            <td>
+              COSMOS Received Time (UTC, Floating point, Unix epoch)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeSecondsConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center">%0.6f</td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_TIMEFORMATTED</td>
+            <td>
+              COSMOS Received Time (Local time zone, Formatted string)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeFormattedConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_COUNT</td>
+            <td>
+              COSMOS packet received count
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedCountConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>VENTURI_VOLTS</td>
+            <td>
+              voltage measurement of venturi ADC
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS VENTURI_VOLTS</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">V</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>VENTURI_CURRENT</td>
+            <td>
+              current measurement of venturi ADC
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS VENTURI_CURRENT</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">mA</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>VENTURI_PRESSURE</td>
+            <td>
+              differential pressure measurement of venturi
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS VENTURI_PRESSURE</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">psid</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>VENTURI_FLOW</td>
+            <td>
+              flow rate measurement of venturi
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS VENTURI_FLOW</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">mL/min</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PUMP_VOLTS</td>
+            <td>
+              voltage measurement of ADC from differential pressure across pump
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS PUMP_VOLTS</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">V</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PUMP_CURRENT</td>
+            <td>
+              current measurement of ADC from differential pressure across pump
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS PUMP_CURRENT</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">mA</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PUMP_PRESSURE</td>
+            <td>
+              pressure differential across pump
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS PUMP_PRESSURE</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">psid</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>STATIC_VOLTS</td>
+            <td>
+              voltage measurement of static pressure ADC
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS STATIC_VOLTS</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">V</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>STATIC_CURRENT</td>
+            <td>
+              current measurement of static pressure ADC
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS STATIC_CURRENT</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">mA</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>STATIC_PRESSURE</td>
+            <td>
+              pressure measurement of static pressure
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion P_CONVERSIONS STATIC_PRESSURE</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">psig</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>LENGTH</td>
+            <td>
+              length of packet in bytes
+              
+              
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PKT_ID</td>
+            <td>
+              packet id which must be 0x00
+              
+                <div><strong>Id Value: 0</strong></div>
+              
+              
+              
+            </td>
+            <td class="text-center">32</td>
+            <td class="text-center">8</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>VENTURI_TIME</td>
+            <td>
+              venturi pressure timestamp in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">40</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>VENTURI_RAW</td>
+            <td>
+              venturi meter ADC code
+              
+              
+              
+            </td>
+            <td class="text-center">104</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>VENTURI_ZERO</td>
+            <td>
+              zero value for venturi pressure
+              
+              
+              
+            </td>
+            <td class="text-center">136</td>
+            <td class="text-center">32</td>
+            <td class="text-center">FLOAT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PUMP_TIME</td>
+            <td>
+              pump pressure timestamp in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">168</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>PUMP_RAW</td>
+            <td>
+              measured ADC code from pump pressure sensor
+              
+              
+              
+            </td>
+            <td class="text-center">232</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PUMP_ZERO</td>
+            <td>
+              zero value for pump pressure
+              
+              
+              
+            </td>
+            <td class="text-center">264</td>
+            <td class="text-center">32</td>
+            <td class="text-center">FLOAT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>STATIC_TIME</td>
+            <td>
+              static pressure timestamp in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">296</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>STATIC_RAW</td>
+            <td>
+              measured ADC code from static pressure sensor
+              
+              
+              
+            </td>
+            <td class="text-center">360</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>STATIC_ZERO</td>
+            <td>
+              zero value for static pressure
+              
+              
+              
+            </td>
+            <td class="text-center">392</td>
+            <td class="text-center">32</td>
+            <td class="text-center">FLOAT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  <hr></hr>
+
+  <div id="tlm_PI_RPM">
+    <h2>PI RPM</h2>
+    <div>RPM of the pump</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th class="text-center">Bit Offset</th>
+          <th class="text-center">Bit Size</th>
+          <th class="text-center">Data Type</th>
+          <th class="text-center">Units</th>
+          <th class="text-center">Format</th>
+        </tr>
+      <thead>
+      <tbody>
+        
+          <tr>
+            <td>RECEIVED_TIMESECONDS</td>
+            <td>
+              COSMOS Received Time (UTC, Floating point, Unix epoch)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeSecondsConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center">%0.6f</td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_TIMEFORMATTED</td>
+            <td>
+              COSMOS Received Time (Local time zone, Formatted string)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeFormattedConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_COUNT</td>
+            <td>
+              COSMOS packet received count
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedCountConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>LENGTH</td>
+            <td>
+              length of packet in bytes
+              
+              
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PKT_ID</td>
+            <td>
+              packet id which must be 0x20
+              
+                <div><strong>Id Value: 32</strong></div>
+              
+              
+              
+            </td>
+            <td class="text-center">32</td>
+            <td class="text-center">8</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TIMESTAMP</td>
+            <td>
+              system time in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">40</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>VALUE</td>
+            <td>
+              measured RPM of the pump
+              
+              
+              
+            </td>
+            <td class="text-center">104</td>
+            <td class="text-center">16</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  <hr></hr>
+
+  <div id="tlm_PI_TEMPERATURE">
+    <h2>PI TEMPERATURE</h2>
+    <div>temperature sensor reading</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th class="text-center">Bit Offset</th>
+          <th class="text-center">Bit Size</th>
+          <th class="text-center">Data Type</th>
+          <th class="text-center">Units</th>
+          <th class="text-center">Format</th>
+        </tr>
+      <thead>
+      <tbody>
+        
+          <tr>
+            <td>RECEIVED_TIMESECONDS</td>
+            <td>
+              COSMOS Received Time (UTC, Floating point, Unix epoch)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeSecondsConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center">%0.6f</td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_TIMEFORMATTED</td>
+            <td>
+              COSMOS Received Time (Local time zone, Formatted string)
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedTimeFormattedConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>RECEIVED_COUNT</td>
+            <td>
+              COSMOS packet received count
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ReceivedCountConversion</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TEMP1_OHMS</td>
+            <td>
+              
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion TEMP_CONVERSIONS TEMP1_OHMS</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">ohms</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TEMP1</td>
+            <td>
+              
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion TEMP_CONVERSIONS TEMP1</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">C</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TEMP2_OHMS</td>
+            <td>
+              
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion TEMP_CONVERSIONS TEMP2_OHMS</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">ohms</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TEMP2</td>
+            <td>
+              
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion TEMP_CONVERSIONS TEMP2</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">C</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TEMP3_OHMS</td>
+            <td>
+              
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion TEMP_CONVERSIONS TEMP3_OHMS</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">ohms</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TEMP3</td>
+            <td>
+              
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion TEMP_CONVERSIONS TEMP3</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">C</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TEMP4_OHMS</td>
+            <td>
+              
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion TEMP_CONVERSIONS TEMP4_OHMS</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">ohms</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TEMP4</td>
+            <td>
+              
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>ProcessorConversion TEMP_CONVERSIONS TEMP4</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">0</td>
+            <td class="text-center">DERIVED</td>
+            <td class="text-center">C</td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>LENGTH</td>
+            <td>
+              length of packet in bytes
+              
+              
+              
+            </td>
+            <td class="text-center">0</td>
+            <td class="text-center">32</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>PKT_ID</td>
+            <td>
+              packet id which must be 0x10
+              
+                <div><strong>Id Value: 16</strong></div>
+              
+              
+              
+            </td>
+            <td class="text-center">32</td>
+            <td class="text-center">8</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TIME1</td>
+            <td>
+              temp1 timestamp in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">40</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>TEMP1_RAW</td>
+            <td>
+              measured value from temperature sensor #1
+              
+              
+              
+            </td>
+            <td class="text-center">104</td>
+            <td class="text-center">16</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TIME2</td>
+            <td>
+              temp2 timestamp in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">120</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>TEMP2_RAW</td>
+            <td>
+              measured value from temperature sensor #2
+              
+              
+              
+            </td>
+            <td class="text-center">184</td>
+            <td class="text-center">16</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TIME3</td>
+            <td>
+              temp3 timestamp in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">200</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>TEMP3_RAW</td>
+            <td>
+              measured value from temperature sensor #3
+              
+              
+              
+            </td>
+            <td class="text-center">264</td>
+            <td class="text-center">16</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+          <tr>
+            <td>TIME4</td>
+            <td>
+              temp4 timestamp in seconds since epoch
+              
+              
+              
+                <table class="table table-striped table-bordered table-condensed" style="margin-top:10px">
+                  <tbody>
+                  
+                  
+                    <tr><td>Read Conversion:</td><td>Timestamp</td></tr>
+                  
+                  
+                  
+                  
+                  </tbody>
+                </table>
+              
+            </td>
+            <td class="text-center">280</td>
+            <td class="text-center">64</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center">%.6f</td>
+          </tr>
+        
+          <tr>
+            <td>TEMP4_RAW</td>
+            <td>
+              measured value from temperature sensor #4
+              
+              
+              
+            </td>
+            <td class="text-center">344</td>
+            <td class="text-center">16</td>
+            <td class="text-center">UINT</td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  <hr></hr>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery-1.10.2.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+  </body>
+</html>

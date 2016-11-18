@@ -33,7 +33,10 @@ build/
 
 # COSMOS
 /lib
-/outputs
+/outputs/logs
+/outputs/tables
+/outputs/tmp
+/outputs/saved_config
 /procedures
 /tools
 /Gemfile*
