@@ -18,6 +18,7 @@ MCP4725::MCP4725(uint8_t address) {
 
 // write DAC output
 void MCP4725::write(uint16_t data) {
+    if (data > 0xFFF) { data = 0xFFF; }
     data = data << 4;
     data = (data >> 8) | (data << 8);
     printf("writing %x\n", data);
@@ -29,6 +30,7 @@ void MCP4725::write(uint16_t data) {
 
 // write EEPROM and DAC output
 void MCP4725::writeEEPROM(uint16_t data) {
+    if (data > 0xFFF) { data = 0xFFF; }
     data = data << 4;
     if (wiringPiI2CWriteReg16(fd, MCP4725_WRITE_EEPROM, data) < 0) {
         perror("Failed to communicate with MCP4725");
