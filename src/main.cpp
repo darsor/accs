@@ -14,11 +14,15 @@
 #include <chrono>               // for timestamps and timing
 #include <sys/sysinfo.h>        // for total memory used
 #include <math.h>               // for round()
+#include <csignal>              // for handling SIGTERM
 
 // this queue provides two concurrent threads: a tlm_queue and cmd_queue
 // any packet pushed to the tlm_queue will be sent to COSMOS
 // any packet received will be found in the cmd_queue
 CosmosQueue queue(4810, 20000, 8);
+
+// signal handler, which closes COSMOS connections before exiting
+void stopHandler(int signum);
 
 // function prototype for getTimestamp() (defined at the bottom), which
 // returns the time in microseconds since unix epoch
@@ -216,6 +220,10 @@ void housekeeping() {
 }
 
 int main() {
+    // register signal handlers
+    signal(SIGINT,  stopHandler);
+    signal(SIGTERM, stopHandler);
+
     // launch each thread
     std::thread(ads1148_thread).detach();
     std::thread(mcp3424_thread).detach();
@@ -262,6 +270,14 @@ int main() {
         usleep(500000);
     }
     return 0;
+}
+
+// TODO: delete queue/close threads/stop sensors?
+void stopHandler(int signum) {
+    printf("Signal %d received... closing COSMOS connections\n", signum);
+    queue.disconnect();
+
+    exit(signum);
 }
 
 // return the system time in microseconds since unix epoch
