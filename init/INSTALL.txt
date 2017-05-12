@@ -1,0 +1,14 @@
+The accs script in this directory is an init script
+which can be used to start the program at boot.
+
+To install the script as a service:
+    chmod +x accs
+    cp accs /etc/init.d/accs
+    update-rc.d accs defaults
+
+The ACCS program will now start on boot.
+
+You can use
+    service accs start
+    service accs stop
+to start or stop the program manually.
