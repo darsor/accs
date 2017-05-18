@@ -115,7 +115,7 @@ TAB "RPM"
 TAB "Power"
   PLOT LINEGRAPH
     X_AXIS_TITLE "Time (Seconds)"
-    Y_AXIS_TITLE "Voltage" LEFT
+    Y_AXIS_TITLE "Voltage and Watts" LEFT
     Y_AXIS_TITLE "Amperage" RIGHT
     SHOW_ABS_X_GRID_LABELS TRUE
     SHOW_X_GRID_LINES FALSE

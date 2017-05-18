@@ -16,7 +16,7 @@ module Cosmos
     def call(packet, buffer)
 	  @results[:VOLTAGE] = voltage(packet.read("VOLTAGE_RAW", :RAW, buffer))
 	  @results[:AMPERAGE] = amperage(packet.read("AMPERAGE_RAW", :RAW, buffer))
-	  @results[:POWER] = packet.read("AMPERAGE", :CONVERTED, buffer) * packet.read("VOLTAGE", :CONVERTED, buffer)
+	  @results[:POWER] = packet.read("AMPERAGE", :CONVERTED, buffer) * 28.0
     end
 	
 	# convert ADC code to voltage
@@ -28,7 +28,7 @@ module Cosmos
 	def amperage(code, gain=8.0)
 	  volts = (code.to_f / @max.to_f) * (2.048 / gain.to_f) * (180.0 / 33.0)
 	  # i = V / R
-	  return volts / 0.51;
+	  return volts / 0.03;
 	end
 
     # Convert to configuration file string
