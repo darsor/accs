@@ -1,3 +1,4 @@
+USER_MODIFIED
 "lib/user_version.rb" 0x8F282EE9
 "config/data/README.txt" 0x93B2C07E
 "config/system/system.txt" 0x9178EE79
@@ -7,6 +8,10 @@
 "config/targets/COSMOS/screens/limits_change.txt" 0xE8C47C54
 "config/targets/COSMOS/screens/version.txt" 0x393D4F72
 "config/targets/COSMOS/target.txt" 0x6C6F9A95
+"config/targets/LABVIEW/cmd_tlm/labview_tlm.txt" 0xE54C99F9
+"config/targets/LABVIEW/cmd_tlm_server.txt" 0x6506DE80
+"config/targets/LABVIEW/lib/timestamp.rb" 0x309999F9
+"config/targets/LABVIEW/target.txt" 0xAD22F1DF
 "config/targets/PI/cmd_tlm/pi_cmd.txt" 0x50639A73
 "config/targets/PI/cmd_tlm/pi_tlm.txt" 0xE3E2ED6F
 "config/targets/PI/cmd_tlm_server.txt" 0x012DF6FF
