@@ -1,4 +1,5 @@
 #INTERFACE NAME				INTERFACE FILE		HOST			W DEST PORT		R PORT		W SOURCE PORT	INTERFACE ADDRESS	TTL		WTIMEOUT	RTIMEOUT
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-INTERFACE LABVIEW_UDP		udp_interface.rb	127.010.010.1	49152			49153		49154			nil					128		nil			nil
+INTERFACE LABVIEW_UDP		udp_interface.rb	LOCALHOST	49152			49153		49154			nil					128		10.0		nil
 	TARGET LABVIEW				
+	DONT_CONNECT

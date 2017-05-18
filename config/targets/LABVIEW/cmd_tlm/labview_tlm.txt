@@ -1,2 +1,1 @@
 TELEMETRY LABVIEW READ BIG_ENDIAN "data test"
-	APPEND_ITEM LENGTH	1	UINT "length of packet in bytes"

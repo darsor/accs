@@ -1,0 +1,2 @@
+COMMAND LABVIEW SENDDATA BIG_ENDIAN "Start sending queued data"
+	PARAMETER 	DATA	0	32	UINT	9	9	9	"Sends a 1 to signal data send"
