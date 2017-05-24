@@ -174,5 +174,6 @@ USER_MODIFIED
 "tools/TlmViewer.bat" 0x09A34857
 "tools/ToolLaunch.bat" 0x7896E14C
 "tools/tool_launch.rb" 0x0BDB6696
-"procedures/handshake.rb" 0x1FAE9238
+"procedures/auto_test.rb" 0xD7D98CDB
+"procedures/handshake.rb" 0x69D9F3B2
 "procedures/README.txt" 0x93B2C07E

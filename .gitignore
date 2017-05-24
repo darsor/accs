@@ -37,7 +37,6 @@ build/
 /outputs/tables
 /outputs/tmp
 /outputs/saved_config
-/procedures
 /tools
 /Gemfile*
 /Launcher*
